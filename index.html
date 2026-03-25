@@ -26,7 +26,7 @@
         .modal { background: var(--w); width: 85%; max-width: 320px; border-radius: 20px; padding: 20px; text-align: center; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .opt-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; background: #f9f9f9; font-size: 17px; cursor: pointer; }
-        #menu { height: 100%; width: 270px; position: fixed; top: 0; left: -270px; background: var(--p); transition: 0.3s ease; z-index: 300; padding-top: 10px; }
+        #menu { height: 100%; width: 270px; position: fixed; top: 0; left: -270px; background: var(--p); transition: 0.3s ease; z-index: 300; padding-top: 10px; overflow-y: auto; }
         #menu .menu-header { color: white; padding: 20px; font-weight: bold; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #2c3e50; }
         #menu a { color: white; padding: 18px 20px; text-decoration: none; display: block; border-bottom: 1px solid #2c3e50; font-size: 16px; }
         #menu a.active { background-color: var(--a); }
@@ -42,6 +42,7 @@
         <a href="#" onclick="loadText(3)" id="menu-3">3. Music Writer</a>
         <a href="#" onclick="loadText(4)" id="menu-4">4. Lynda Carter</a>
         <a href="#" onclick="loadText(5)" id="menu-5">5. Perfume</a>
+        <a href="#" onclick="loadText(6)" id="menu-6">6. FIFA World Cup</a>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
 
@@ -126,6 +127,20 @@
                     102: { opts: ["Both", "Any", "Most"], corr: "Most" },
                     103: { opts: ["So", "If", "While"], corr: "If" },
                     104: { opts: ["Left", "Leaves", "Leaving"], corr: "Leaving" }
+                }
+            },
+            6: {
+                title: "FIFA World Cup",
+                content: `TVs are (0)_______ on. The FIFA World Cup, the biggest soccer event, has <span class="gap" data-id="97" onclick="showPop(97)">97</span> begun. Soccer is a very popular sport; I would say it is the one with the most fans, <span class="gap" data-id="98" onclick="showPop(98)">98</span> it? Actually, the FIFA World Cup has always <span class="gap" data-id="99" onclick="showPop(99)">99</span> a great show. <br><br> Before 1978, not many teams could take part in the competition, <span class="gap" data-id="100" onclick="showPop(100)">100</span> then included few countries. Teams from Europe and South America are usually <span class="gap" data-id="101" onclick="showPop(101)">101</span> than those from Asia or Africa. <br><br> Brazil has played all the World Cups but spent many years without winning a title until 1970, when they played <span class="gap" data-id="102" onclick="showPop(102)">102</span> Italy. This was a really exciting match! <span class="gap" data-id="103" onclick="showPop(103)">103</span> 90 minutes of emotion, Brazil got the great prize. <br><br> So, stay where you are. You <span class="gap" data-id="104" onclick="showPop(104)">104</span> leave your seat. The first goal is coming soon.`,
+                questions: {
+                    97: { opts: ["still", "just", "yet"], corr: "just" },
+                    98: { opts: ["isn't", "hasn't", "doesn't"], corr: "isn't" },
+                    99: { opts: ["offering", "offer", "offered"], corr: "offered" },
+                    100: { opts: ["which", "who", "where"], corr: "which" },
+                    101: { opts: ["strong", "stronger", "strongest"], corr: "stronger" },
+                    102: { opts: ["across", "against", "among"], corr: "against" },
+                    103: { opts: ["Along", "Around", "After"], corr: "After" },
+                    104: { opts: ["needn't", "mustn't", "wouldn't"], corr: "mustn't" }
                 }
             }
         };
