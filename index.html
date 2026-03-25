@@ -36,10 +36,11 @@
 <body>
 
     <div id="menu">
-        <div class="menu-header">Ejercicios</div>
+        <div class="menu-header">Ejercicios Disponibles</div>
         <a href="#" onclick="loadText(1)" id="menu-1">1. Luthiers</a>
         <a href="#" onclick="loadText(2)" id="menu-2">2. Repair Cafés</a>
         <a href="#" onclick="loadText(3)" id="menu-3">3. Music Writer</a>
+        <a href="#" onclick="loadText(4)" id="menu-4">4. Lynda Carter</a>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
 
@@ -97,6 +98,20 @@
                     103: { opts: ["becomes", "became", "become"], corr: "become" },
                     104: { opts: ["hardest", "hard", "hardly"], corr: "hard" }
                 }
+            },
+            4: {
+                title: "Lynda Carter",
+                content: `Lynda Carter, the American star, wasn't really popular as a schoolchild because she wasn't very good-looking. As she was (o)_______ than most boys, they usually laughed at her. She was <span class="gap" data-id="100" onclick="showPop(100)">100</span> called "Olive", like Popeye's thin girlfriend. <br><br> At the age of 15, she wanted to become a singer <span class="gap" data-id="101" onclick="showPop(101)">101</span> she changed the spelling of her first name from Linda to Lynda because she always said to <span class="gap" data-id="102" onclick="showPop(102)">102</span> it seemed more interesting. Two years later, she was singing in two different groups and traveling all <span class="gap" data-id="103" onclick="showPop(103)">103</span> the country. <br><br> In 1974, Lynda went to Los Angeles and <span class="gap" data-id="104" onclick="showPop(104)">104</span> acting on television. She <span class="gap" data-id="105" onclick="showPop(105)">105</span> continued playing her music at concerts, and recorded her only album, Portrait. Later, she was <span class="gap" data-id="106" onclick="showPop(106)">106</span> to act in "Wonder Woman". It was a successful TV program that <span class="gap" data-id="107" onclick="showPop(107)">107</span> loved.`,
+                questions: {
+                    100: { opts: ["anyway", "however", "even"], corr: "even" },
+                    101: { opts: ["so", "as", "if"], corr: "so" },
+                    102: { opts: ["himself", "herself", "yourself"], corr: "herself" },
+                    103: { opts: ["among", "over", "beside"], corr: "over" },
+                    104: { opts: ["beginning", "begin", "began"], corr: "began" },
+                    105: { opts: ["also", "just", "once"], corr: "also" },
+                    106: { opts: ["invite", "inviting", "invited"], corr: "invited" },
+                    107: { opts: ["everyone", "something", "everything"], corr: "everyone" }
+                }
             }
         };
 
@@ -112,7 +127,7 @@
                     <p>${data.content}</p>
                     <button class="check-btn" onclick="checkAnswers()">Verificar Resultados ✔</button>
                     <div id="results-panel" class="results-panel">
-                        <strong>Resumen:</strong>
+                        <strong>Resumen de Desempeño:</strong>
                         <div class="score-box">
                             <div class="score-item" style="color:var(--s)">Correctas<span class="score-count" id="count-correct">0</span></div>
                             <div class="score-item" style="color:var(--e)">Incorrectas<span class="score-count" id="count-incorrect">0</span></div>
