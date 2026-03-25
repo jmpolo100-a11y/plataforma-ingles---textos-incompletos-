@@ -41,6 +41,7 @@
         <a href="#" onclick="loadText(2)" id="menu-2">2. Repair Cafés</a>
         <a href="#" onclick="loadText(3)" id="menu-3">3. Music Writer</a>
         <a href="#" onclick="loadText(4)" id="menu-4">4. Lynda Carter</a>
+        <a href="#" onclick="loadText(5)" id="menu-5">5. Perfume</a>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
 
@@ -111,6 +112,20 @@
                     105: { opts: ["also", "just", "once"], corr: "also" },
                     106: { opts: ["invite", "inviting", "invited"], corr: "invited" },
                     107: { opts: ["everyone", "something", "everything"], corr: "everyone" }
+                }
+            },
+            5: {
+                title: "Perfume",
+                content: `People have always (0)_______ perfume to help them smell good. <span class="gap" data-id="97" onclick="showPop(97)">97</span> centuries, people have added different things to perfumes, especially oils taken from plants and animals. In the factories <span class="gap" data-id="98" onclick="showPop(98)">98</span> they're mixed, the air is always filled with a special smell that everyone <span class="gap" data-id="99" onclick="showPop(99)">99</span>. <br><br> The first perfumes came from the earliest groups of people in history. <span class="gap" data-id="100" onclick="showPop(100)">100</span> 2005, it was discovered that the world's first perfumes were made in European countries, <span class="gap" data-id="101" onclick="showPop(101)">101</span> Cyprus and France. <span class="gap" data-id="102" onclick="showPop(102)">102</span> of those perfumes are still in perfect condition because they were carefully preserved in bottles during years. <br><br> <span class="gap" data-id="103" onclick="showPop(103)">103</span> you want your perfume to have a strong smell, body temperature is important. Just put some on the warm parts of your body. <span class="gap" data-id="104" onclick="showPop(104)">104</span> home without wearing your favorite perfume is something you shouldn't do.`,
+                questions: {
+                    97: { opts: ["Since", "Across", "For"], corr: "For" },
+                    98: { opts: ["which", "who", "where"], corr: "where" },
+                    99: { opts: ["loving", "loves", "love"], corr: "loves" },
+                    100: { opts: ["On", "In", "At"], corr: "In" },
+                    101: { opts: ["like", "through", "along"], corr: "like" },
+                    102: { opts: ["Both", "Any", "Most"], corr: "Most" },
+                    103: { opts: ["So", "If", "While"], corr: "If" },
+                    104: { opts: ["Left", "Leaves", "Leaving"], corr: "Leaving" }
                 }
             }
         };
