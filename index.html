@@ -7,92 +7,58 @@
     <style>
         :root { --p: #1a2a3a; --a: #007aff; --bg: #f2f2f7; --w: #fff; --s: #27ae60; --e: #e74c3c; }
         body { font-family: -apple-system, sans-serif; margin: 0; background: var(--bg); line-height: 1.5; padding-bottom: 20px; }
-        
-        /* Barra Superior */
         header { background: var(--w); height: 60px; display: flex; align-items: center; padding: 0 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #d1d1d6; }
         .btn-menu { font-size: 26px; color: var(--a); cursor: pointer; background: none; border: none; padding: 5px; }
         header h1 { font-size: 16px; margin: 0 auto; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* Contenedor Principal */
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
-        
-        /* Tarjeta de Lectura */
         .reading-card { background: var(--w); padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .reading-card h2 { margin-top: 0; color: var(--p); border-bottom: 2px solid var(--bg); padding-bottom: 10px; font-size: 22px; }
-        
-        /* Espacios (Gaps) */
         .gap { background: #e1f0ff; color: var(--a); padding: 2px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; border: 1px dashed var(--a); display: inline-block; margin: 2px 0; -webkit-tap-highlight-color: transparent; }
         .gap.filled { background: #d1e9ff; color: #1a2a3a; border-style: solid; }
         .gap.correct { background-color: #e8fdf0 !important; color: var(--s) !important; border-color: var(--s) !important; }
         .gap.incorrect { background-color: #fff1f0 !important; color: var(--e) !important; border-color: var(--e) !important; }
-
-        /* Botón de Verificar */
         .check-btn { width: 100%; margin-top: 20px; background: var(--s); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .check-btn:active { transform: scale(0.98); opacity: 0.9; }
-
-        /* Panel de Resultados */
         .results-panel { margin-top: 20px; padding: 15px; background: #fff; border-radius: 12px; display: none; border: 2px solid #eee; text-align: center; }
         .score-box { display: flex; justify-content: space-around; margin-top: 10px; }
         .score-item { font-size: 13px; font-weight: bold; }
         .score-count { font-size: 22px; display: block; font-weight: 800; }
-
-        /* Modal Pop-up */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal { background: var(--w); width: 85%; max-width: 320px; border-radius: 20px; padding: 20px; text-align: center; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .opt-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; background: #f9f9f9; font-size: 17px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-        .opt-btn:active { background: #eee; }
-
-        /* Menú Hamburguesa */
-        #menu { height: 100%; width: 270px; position: fixed; top: 0; left: -270px; background: var(--p); transition: 0.3s ease; z-index: 300; padding-top: 10px; box-shadow: 5px 0 15px rgba(0,0,0,0.2); }
-        #menu .menu-header { color: white; padding: 20px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2c3e50; margin-bottom: 10px;}
-        #menu a { color: white; padding: 18px 20px; text-decoration: none; display: block; border-bottom: 1px solid #2c3e50; font-size: 16px; transition: 0.2s; }
-        #menu a:active, #menu a.active { background-color: var(--a); }
+        .opt-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; background: #f9f9f9; font-size: 17px; cursor: pointer; }
+        #menu { height: 100%; width: 270px; position: fixed; top: 0; left: -270px; background: var(--p); transition: 0.3s ease; z-index: 300; padding-top: 10px; }
+        #menu .menu-header { color: white; padding: 20px; font-weight: bold; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #2c3e50; }
+        #menu a { color: white; padding: 18px 20px; text-decoration: none; display: block; border-bottom: 1px solid #2c3e50; font-size: 16px; }
+        #menu a.active { background-color: var(--a); }
         .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 250; }
     </style>
 </head>
 <body>
 
     <div id="menu">
-        <div class="menu-header">Banco de Textos</div>
+        <div class="menu-header">Ejercicios</div>
         <a href="#" onclick="loadText(1)" id="menu-1">1. Luthiers</a>
         <a href="#" onclick="loadText(2)" id="menu-2">2. Repair Cafés</a>
-        <a href="#" style="opacity:0.4">3. Bloqueado...</a>
+        <a href="#" onclick="loadText(3)" id="menu-3">3. Music Writer</a>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
 
     <header>
         <button class="btn-menu" onclick="openM()">☰</button>
-        <h1 id="app-title">PRÁCTICA ICFES</h1>
+        <h1 id="app-title">PRÁCTICA INGLÉS</h1>
     </header>
 
-    <div class="container" id="main-content">
-        </div>
+    <div class="container" id="main-content"></div>
 
     <div class="modal-overlay" id="modal-overlay" onclick="closePop(event)">
-        <div class="modal">
-            <h3 id="modal-title" style="margin:0 0 10px 0; color:#555; font-size:18px;">Selecciona la opción</h3>
-            <div id="options-box"></div>
-        </div>
+        <div class="modal"><h3 style="margin:0 0 10px 0; color:#555;">Opciones</h3><div id="options-box"></div></div>
     </div>
 
     <script>
-        // --- BANCO DE DATOS DE TEXTOS (Se ampliará hasta 20) ---
         const textDatabase = {
             1: {
                 title: "Luthiers",
-                content: `A luthier is a person who builds musical instruments and (0)_______ them beautiful and useful. They are usually able to work on different instruments; however, they 
-                    <span class="gap" data-id="100" onclick="showPop(100)">100</span> choose instruments that belong to a type, like violins and guitars that are 
-                    <span class="gap" data-id="101" onclick="showPop(101)">101</span> similar.
-                    <br><br>
-                    They use <span class="gap" data-id="102" onclick="showPop(102)">102</span> materials, from wood to metal, and a variety of machines and equipment to cut and put the parts together to make amazing instruments, 
-                    <span class="gap" data-id="103" onclick="showPop(103)">103</span> are played by awesome musicians.
-                    <br><br>
-                    Sometimes, instruments get <span class="gap" data-id="104" onclick="showPop(104)">104</span> because they are old, or they stop working 
-                    <span class="gap" data-id="105" onclick="showPop(105)">105</span> an accident. So, repairing instruments is 
-                    <span class="gap" data-id="106" onclick="showPop(106)">106</span> part of a luthier’s job.
-                    <br><br>
-                    There are some facts you have to know <span class="gap" data-id="107" onclick="showPop(107)">107</span> you’d like to be a luthier.`,
+                content: `A luthier is a person who builds musical instruments and (0)_______ them beautiful and useful. They are usually able to work on different instruments; however, they <span class="gap" data-id="100" onclick="showPop(100)">100</span> choose instruments that belong to a type, like violins and guitars that are <span class="gap" data-id="101" onclick="showPop(101)">101</span> similar. <br><br> They use <span class="gap" data-id="102" onclick="showPop(102)">102</span> materials, from wood to metal, and a variety of machines and equipment to cut and put the parts together to make amazing instruments, <span class="gap" data-id="103" onclick="showPop(103)">103</span> are played by awesome musicians. <br><br> Sometimes, instruments get <span class="gap" data-id="104" onclick="showPop(104)">104</span> because they are old, or they stop working <span class="gap" data-id="105" onclick="showPop(105)">105</span> an accident. So, repairing instruments is <span class="gap" data-id="106" onclick="showPop(106)">106</span> part of a luthier’s job. <br><br> There are some facts you have to know <span class="gap" data-id="107" onclick="showPop(107)">107</span> you’d like to be a luthier.`,
                 questions: {
                     100: { opts: ["often", "once", "ever"], corr: "often" },
                     101: { opts: ["enough", "over", "quite"], corr: "quite" },
@@ -106,17 +72,7 @@
             },
             2: {
                 title: "Repair Cafés",
-                content: `Repair Cafés are free meeting places (0)_______ you'll find equipment and specialists who will help you make things as good as new. Visitors from 
-                    <span class="gap" data-id="105" onclick="showPop(105)">105</span> the world bring broken objects such as furniture or laptops, and work among people with amazing technical abilities in 
-                    <span class="gap" data-id="106" onclick="showPop(106)">106</span> fields. 
-                    <br><br>
-                    If you don’t have <span class="gap" data-id="107" onclick="showPop(107)">107</span> that needs repairing, you can still stay and enjoy a delicious snack. At the same time you can help someone 
-                    <span class="gap" data-id="108" onclick="showPop(108)">108</span>.
-                    <br><br>
-                    Martina Becker <span class="gap" data-id="109" onclick="showPop(109)">109</span> the first Repair Café in Amsterdam in 2009. 
-                    <span class="gap" data-id="110" onclick="showPop(110)">110</span> she was working there, she dreamed of opening the Repair Café Foundation. She finally did so some years later. This organization has offered help in building new cafés in the Netherlands 
-                    <span class="gap" data-id="111" onclick="showPop(111)">111</span> 2011. Today, Martina feels the 
-                    <span class="gap" data-id="112" onclick="showPop(112)">112</span> person on the planet.`,
+                content: `Repair Cafés are free meeting places (0)_______ you'll find equipment and specialists who will help you make things as good as new. Visitors from <span class="gap" data-id="105" onclick="showPop(105)">105</span> the world bring broken objects such as furniture or laptops, and work among people with amazing technical abilities in <span class="gap" data-id="106" onclick="showPop(106)">106</span> fields. <br><br> If you don’t have <span class="gap" data-id="107" onclick="showPop(107)">107</span> that needs repairing, you can still stay and enjoy a delicious snack. At the same time you can help someone <span class="gap" data-id="108" onclick="showPop(108)">108</span>. <br><br> Martina Becker <span class="gap" data-id="109" onclick="showPop(109)">109</span> the first Repair Café in Amsterdam in 2009. <span class="gap" data-id="110" onclick="showPop(110)">110</span> she was working there, she dreamed of opening the Repair Café Foundation. She finally did so some years later. This organization has offered help in building new cafés in the Netherlands <span class="gap" data-id="111" onclick="showPop(111)">111</span> 2011. Today, Martina feels the <span class="gap" data-id="112" onclick="showPop(112)">112</span> person on the planet.`,
                 questions: {
                     105: { opts: ["above", "outside", "around"], corr: "around" },
                     106: { opts: ["several", "each", "much"], corr: "several" },
@@ -127,114 +83,89 @@
                     111: { opts: ["since", "for", "until"], corr: "since" },
                     112: { opts: ["lucky", "luckier", "luckiest"], corr: "luckiest" }
                 }
+            },
+            3: {
+                title: "Music Writer",
+                content: `I'm a music writer and play (0)_______ instruments. I like making music <span class="gap" data-id="97" onclick="showPop(97)">97</span> real sounds recorded from different places. So, I take the music that I <span class="gap" data-id="98" onclick="showPop(98)">98</span> created in the studio and I play it in concerts. <br><br> I record on the computer like <span class="gap" data-id="99" onclick="showPop(99)">99</span> does it today, and I also play real instruments. I edit all the music <span class="gap" data-id="100" onclick="showPop(100)">100</span> with the help of a computer. <br><br> I would say I spend <span class="gap" data-id="101" onclick="showPop(101)">101</span> of the time doing that. But it doesn't matter because now I know that music is a bridge <span class="gap" data-id="102" onclick="showPop(102)">102</span> the audience and the story, and it has <span class="gap" data-id="103" onclick="showPop(103)">103</span> a key part in films and plays. <br><br> Finally, I decided to continue working <span class="gap" data-id="104" onclick="showPop(104)">104</span> on this kind of music field because my job is the best experience.`,
+                questions: {
+                    97: { opts: ["uses", "use", "using"], corr: "using" },
+                    98: { opts: ["having", "has", "have"], corr: "have" },
+                    99: { opts: ["everybody", "everything", "somebody"], corr: "everybody" },
+                    100: { opts: ["yourself", "myself", "herself"], corr: "myself" },
+                    101: { opts: ["many", "most", "few"], corr: "most" },
+                    102: { opts: ["around", "between", "inside"], corr: "between" },
+                    103: { opts: ["becomes", "became", "become"], corr: "become" },
+                    104: { opts: ["hardest", "hard", "hardly"], corr: "hard" }
+                }
             }
         };
 
-        // --- LÓGICA DE CARGA DINÁMICA ---
-        let currentTextId = null;
-        let currentGapId = null;
+        let currentId = null, currentGapId = null;
 
         function loadText(id) {
-            currentTextId = id;
-            const textData = textDatabase[id];
-            
-            // Actualizar interfaz
+            currentId = id;
+            const data = textDatabase[id];
             document.getElementById('app-title').innerText = "TEXTO " + id;
-            const container = document.getElementById('main-content');
-            
-            // Renderizar tarjeta
-            container.innerHTML = `
+            document.getElementById('main-content').innerHTML = `
                 <div class="reading-card">
-                    <h2>${textData.title}</h2>
-                    <p>${textData.content}</p>
+                    <h2>${data.title}</h2>
+                    <p>${data.content}</p>
                     <button class="check-btn" onclick="checkAnswers()">Verificar Resultados ✔</button>
                     <div id="results-panel" class="results-panel">
-                        <strong style="color:var(--p)">Resumen de desempeño:</strong>
+                        <strong>Resumen:</strong>
                         <div class="score-box">
                             <div class="score-item" style="color:var(--s)">Correctas<span class="score-count" id="count-correct">0</span></div>
                             <div class="score-item" style="color:var(--e)">Incorrectas<span class="score-count" id="count-incorrect">0</span></div>
                             <div class="score-item" style="color:var(--a)">Total<span class="score-count" id="count-total">0/0</span></div>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            // Actualizar estado del menú
+                </div>`;
             document.querySelectorAll('#menu a').forEach(a => a.classList.remove('active'));
             document.getElementById('menu-' + id).classList.add('active');
-            
-            closeM(); // Cerrar menú
-            window.scrollTo(0, 0); // Ir arriba
+            closeM(); window.scrollTo(0,0);
         }
 
-        // --- LÓGICA DE POP-UP (Modal) ---
         function showPop(id) {
             currentGapId = id;
-            const textData = textDatabase[currentTextId];
             const box = document.getElementById('options-box');
             box.innerHTML = '';
-            
-            // Generar botones A, B, C
-            textData.questions[id].opts.forEach((opt, index) => {
+            textDatabase[currentId].questions[id].opts.forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'opt-btn';
-                btn.innerText = String.fromCharCode(65 + index) + ". " + opt;
-                btn.onclick = () => selectOpt(opt);
+                btn.innerText = String.fromCharCode(65+i) + ". " + opt;
+                btn.onclick = () => {
+                    const g = document.querySelector(`.gap[data-id="${currentGapId}"]`);
+                    g.innerText = opt; g.classList.add('filled');
+                    g.classList.remove('correct', 'incorrect');
+                    closePop();
+                };
                 box.appendChild(btn);
             });
-            
             document.getElementById('modal-overlay').style.display = 'flex';
         }
 
-        function selectOpt(word) {
-            const gap = document.querySelector(`.gap[data-id="${currentGapId}"]`);
-            if(gap) {
-                gap.innerText = word;
-                gap.classList.add('filled');
-                gap.classList.remove('correct', 'incorrect'); // Limpiar correcciones previas
-            }
-            closePop();
-        }
-
-        function closePop(e) {
-            if(!e || e.target.id === 'modal-overlay') document.getElementById('modal-overlay').style.display = 'none';
-        }
-
-        // --- LÓGICA DE VERIFICACIÓN ---
         function checkAnswers() {
-            const textData = textDatabase[currentTextId];
-            const gaps = document.querySelectorAll('.gap');
-            let correct = 0, incorrect = 0, filled = 0;
-            
-            gaps.forEach(gap => {
-                const id = gap.getAttribute('data-id');
-                if (gap.classList.contains('filled')) {
-                    filled++;
-                    if (gap.innerText.trim() === textData.questions[id].corr) {
-                        gap.classList.add('correct'); correct++;
-                    } else {
-                        gap.classList.add('incorrect'); incorrect++;
-                    }
+            const data = textDatabase[currentId];
+            let c = 0, inc = 0, f = 0;
+            document.querySelectorAll('.gap').forEach(g => {
+                const id = g.getAttribute('data-id');
+                if (g.classList.contains('filled')) {
+                    f++;
+                    if (g.innerText.trim() === data.questions[id].corr) { g.classList.add('correct'); c++; }
+                    else { g.classList.add('incorrect'); inc++; }
                 }
             });
-
-            // Mostrar Panel
-            const panel = document.getElementById('results-panel');
-            panel.style.display = 'block';
-            document.getElementById('count-correct').innerText = correct;
-            document.getElementById('count-incorrect').innerText = incorrect;
-            document.getElementById('count-total').innerText = `${filled}/${gaps.length}`;
-            
-            // Scroll suave a resultados
+            document.getElementById('results-panel').style.display = 'block';
+            document.getElementById('count-correct').innerText = c;
+            document.getElementById('count-incorrect').innerText = inc;
+            document.getElementById('count-total').innerText = `${f}/${Object.keys(data.questions).length}`;
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        // --- CONTROL DE MENÚ (Hamburguesa) ---
+        function closePop(e) { if(!e || e.target.id === 'modal-overlay') document.getElementById('modal-overlay').style.display = 'none'; }
         function openM() { document.getElementById('menu').style.left='0'; document.getElementById('m-overlay').style.display='block'; }
         function closeM() { document.getElementById('menu').style.left='-270px'; document.getElementById('m-overlay').style.display='none'; }
-
-        // --- INICIAR ---
-        loadText(1); // Cargar texto 1 por defecto
+        loadText(1);
     </script>
 </body>
 </html>
