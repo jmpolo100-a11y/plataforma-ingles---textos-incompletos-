@@ -57,7 +57,6 @@
         <div class="menu-header">Banco de Textos</div>
         <a href="#" onclick="loadText(1)" id="menu-1">1. Luthiers</a>
         <a href="#" onclick="loadText(2)" id="menu-2">2. Repair Cafés</a>
-        <a href="#" onclick="loadText(3)" id="menu-3">3. Music Writer</a>
         <a href="#" style="opacity:0.4">3. Bloqueado...</a>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
@@ -130,26 +129,6 @@
                 }
             }
         };
-        3: {
-                title: "Music Writer",
-                content: `I'm a music writer and play (0)_______ instruments. I like making music (97)_______ real sounds recorded from different places. So, I take the music that I (98)_______ created in the studio and I play it in concerts. 
-                    <br><br>
-                    I record on the computer like (99)_______ does it today, and I also play real instruments. I edit all the music (100)_______ with the help of a computer. 
-                    <br><br>
-                    I would say I spend (101)_______ of the time doing that. But it doesn't matter because now I know that music is a bridge (102)_______ the audience and the story, and it has (103)_______ a key part in films and plays. 
-                    <br><br>
-                    Finally, I decided to continue working (104)_______ on this kind of music field because my job is the best experience in my personal and professional life.`,
-                questions: {
-                    97: { opts: ["uses", "use", "using"], corr: "using" },
-                    98: { opts: ["having", "has", "have"], corr: "have" },
-                    99: { opts: ["everybody", "everything", "somebody"], corr: "everybody" },
-                    100: { opts: ["yourself", "myself", "herself"], corr: "myself" },
-                    101: { opts: ["many", "most", "few"], corr: "most" },
-                    102: { opts: ["around", "between", "inside"], corr: "between" },
-                    103: { opts: ["becomes", "became", "become"], corr: "become" },
-                    104: { opts: ["hardest", "hard", "hardly"], corr: "hard" }
-                }
-            }
 
         // --- LÓGICA DE CARGA DINÁMICA ---
         let currentTextId = null;
