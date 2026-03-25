@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Saber 11 - PopUp & Dashboard</title>
+    <style>
+        :root { --p: #1a2a3a; --a: #007aff; --bg: #f2f2f7; --success: #34c759; --error: #ff3b30; }
+        body { font-family: -apple-system, sans-serif; margin: 0; background: var(--bg); line-height: 1.6; padding-bottom: 120px; }
+        
+        /* Header & Menu */
+        header { background: white; height: 60px; display: flex; align-items: center; padding: 0 15px; position: sticky; top: 0; border-bottom: 1px solid #d1d1d6; z-index: 10; }
+        .btn-menu { font-size: 24px; color: var(--a); cursor: pointer; background: none; border: none; padding: 10px; }
+        header h1 { font-size: 16px; margin: 0 auto; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Contenido del Texto */
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        
+        .gap { 
+            background: #e1f0ff; 
+            color: var(--a); 
+            padding: 2px 8px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border: 1px dashed var(--a);
+            display: inline-block;
+            transition: 0.3s;
+            margin: 0 2px;
+        }
+        .gap.filled { background: #d1e9ff; color: #1a2a3a; border-style: solid; font-weight: 500; }
+
+        /* Estilos de Verificación en el Texto */
+        .gap.correct { background-color: #e8fdf0 !important; color: var(--success) !important; border-color: var(--success) !important; font-weight: bold; }
+        .gap.incorrect { background-color: #fff1f0 !important; color: var(--error) !important; border-color: var(--error) !important; text-decoration: line-through; }
+
+        /* Modal Pop-up (Opciones) */
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.6); 
+            z-index: 100; 
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+        .modal { 
+            background: white; 
+            width: 85%; 
+            max-width: 300px; 
+            border-radius: 20px; 
+            padding: 20px; 
+            text-align: center;
+            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .opt-btn { 
+            display: block; width: 100%; 
+            padding: 15px; margin: 10px 0; 
+            border: 2px solid #eee; border-radius: 12px; 
+            background: #f9f9f9; font-size: 17px; font-weight: 500;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .opt-btn:active { background: var(--a); color: white; border-color: var(--a); }
+
+        /* Dashboard de Resultados Inferior */
+        #result-panel {
+            position: fixed;
+            bottom: -150px; /* Escondido por defecto */
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.15);
+            border-radius: 20px 20px 0 0;
+            z-index: 80;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 15px 20px 25px;
+            box-sizing: border-box;
+        }
+        #result-panel.show { bottom: 0; }
+
+        .stat-grid { display: flex; justify-content: space-around; margin-top: 15px; }
+        .stat-box { text-align: center; font-size: 14px; color: #666; }
+        .stat-num { font-size: 24px; font-weight: bold; display: block; }
+        .stat-success { color: var(--success); }
+        .stat-error { color: var(--error); }
+
+        /* Botón de Verificar Flotante */
+        .check-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 50;
+            transition: 0.3s;
+        }
+        .check-btn:active { transform: scale(0.95); }
+
+        /* Menú Lateral */
+        #menu { height: 100%; width: 260px; position: fixed; top: 0; left: -260px; background: var(--p); transition: 0.3s; z-index: 200; padding-top: 20px; }
+        #menu a { color: #ecf0f1; padding: 18px 20px; text-decoration: none; display: block; border-bottom: 1px solid #34495e; font-size: 17px; }
+        #menu a.active { background-color: var(--a); }
+        .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 150; }
+    </style>
+</head>
+<body>
+
+    <div id="menu">
+        <a href="#" class="active">1. Luthiers</a>
+        <a href="#" style="opacity:0.4">2. Pendiente...</a>
+    </div>
+    <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
+
+    <header>
+        <button class="btn-menu" onclick="openM()">☰</button>
+        <h1>LECTURA CRÍTICA</h1>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 style="margin-top:0; color:var(--p);">Luthiers</h2>
+            <p>A luthier is a person who builds musical instruments and (0)_______ them beautiful and useful. They are usually able to work on different instruments; however, they 
+                <span class="gap" data-id="100" onclick="showPop(100)">100</span> choose instruments that belong to a type, like violins and guitars that are 
+                <span class="gap" data-id="101" onclick="showPop(101)">101</span> similar.
+            </p>
+            <p>They use <span class="gap" data-id="102" onclick="showPop(102)">102</span> materials, from wood to metal, and a variety of machines and equipment to cut and put the parts together to make amazing instruments, 
+                <span class="gap" data-id="103" onclick="showPop(103)">103</span> are played by awesome musicians.
+            </p>
+            <p>Sometimes, instruments get <span class="gap" data-id="104" onclick="showPop(104)">104</span> because they are old, or they stop working 
+                <span class="gap" data-id="105" onclick="showPop(105)">105</span> an accident. So, repairing instruments is 
+                <span class="gap" data-id="106" onclick="showPop(106)">106</span> part of a luthier’s job.
+            </p>
+            <p>There are some facts you have to know <span class="gap" data-id="107" onclick="showPop(107)">107</span> you’d like to be a luthier: you must be good with your hands and mind details, but the most important thing is to love music.</p>
+        </div>
+    </div>
+
+    <button class="check-btn" id="main-check-btn" onclick="checkAnswers()">Verificar ✔</button>
+
+    <div id="result-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span id="result-title" style="font-weight:bold; font-size: 16px; color:var(--p);">Resultados:</span>
+            <span style="color:var(--a); font-size:14px; cursor:pointer;" onclick="hideResult()">Ocultar</span>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-box">
+                <span class="stat-num stat-success" id="stat-correct">0</span>
+                Aciertos
+            </div>
+            <div class="stat-box">
+                <span class="stat-num stat-error" id="stat-incorrect">0</span>
+                Errores
+            </div>
+            <div class="stat-box">
+                <span class="stat-num" style="color:var(--p)" id="stat-percent">0%</span>
+                Precisión
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay" onclick="closePop(event)">
+        <div class="modal">
+            <h3 id="modal-title" style="margin-top:0; color:#555">Pregunta</h3>
+            <div id="options-box"></div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+            100: { opts: ["often", "once", "ever"], correct: "often" },
+            101: { opts: ["enough", "over", "quite"], correct: "quite" },
+            102: { opts: ["every", "several", "less"], correct: "several" },
+            103: { opts: ["where", "which", "who"], correct: "which" },
+            104: { opts: ["break", "breaking", "broken"], correct: "broken" },
+            105: { opts: ["after", "along", "around"], correct: "after" },
+            106: { opts: ["both", "either", "another"], correct: "another" },
+            107: { opts: ["so", "if", "while"], correct: "if" }
+        };
+
+        let currentGapId = null;
+
+        function showPop(id) {
+            currentGapId = id;
+            document.getElementById('modal-title').innerText = "Pregunta " + id;
+            const box = document.getElementById('options-box');
+            box.innerHTML = '';
+            
+            quizData[id].opts.forEach((opt, index) => {
+                const letra = String.fromCharCode(65 + index);
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = letra + ". " + opt;
+                btn.onclick = () => selectOpt(opt);
+                box.appendChild(btn);
+            });
+            
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function selectOpt(word) {
+            const gap = document.querySelector(`.gap[data-id="${currentGapId}"]`);
+            if(gap) {
+                gap.innerText = word;
+                gap.classList.add('filled');
+                gap.classList.remove('correct', 'incorrect');
+            }
+            hideResult(); // Ocultar resultados si edita
+            closePop();
+        }
+
+        function closePop(e) {
+            if(!e || e.target.id === 'modal-overlay') {
+                document.getElementById('modal-overlay').style.display = 'none';
+            }
+        }
+
+        function checkAnswers() {
+            let correctCount = 0;
+            let totalFilled = 0;
+            const gaps = document.querySelectorAll('.gap');
+
+            gaps.forEach(gap => {
+                const id = gap.getAttribute('data-id');
+                const selectedAnswer = gap.innerText.trim();
+                const correctAnswer = quizData[id].correct;
+
+                if (gap.classList.contains('filled')) {
+                    totalFilled++;
+                    if (selectedAnswer === correctAnswer) {
+                        gap.classList.add('correct');
+                        gap.classList.remove('incorrect');
+                        correctCount++;
+                    } else {
+                        gap.classList.add('incorrect');
+                        gap.classList.remove('correct');
+                    }
+                }
+            });
+
+            if (totalFilled === 0) {
+                alert("Llena al menos un espacio antes de verificar.");
+                return;
+            }
+
+            // Actualizar Dashboard Inferior
+            let incorrects = totalFilled - correctCount;
+            let percent = Math.round((correctCount / totalFilled) * 100);
+
+            document.getElementById('stat-correct').innerText = correctCount;
+            document.getElementById('stat-incorrect').innerText = incorrects;
+            document.getElementById('stat-percent').innerText = percent + "%";
+
+            // Control de Felicidades
+            if(percent === 100) { document.getElementById('result-title').innerText = "🏆 ¡Perfecto! Felicitaciones 🎉"; }
+            else if(percent >= 70) { document.getElementById('result-title').innerText = "👍 ¡Muy buen trabajo!"; }
+            else { document.getElementById('result-title').innerText = "🔍 ¡Sigue practicando!"; }
+
+            // Mostrar Panel y Mover botón
+            document.getElementById('result-panel').classList.add('show');
+            document.getElementById('main-check-btn').style.bottom = '160px'; // Sube el botón para que no tape el panel
+        }
+
+        function hideResult() {
+            document.getElementById('result-panel').classList.remove('show');
+            document.getElementById('main-check-btn').style.bottom = '20px';
+        }
+
+        function openM() { document.getElementById('menu').style.left='0'; document.getElementById('m-overlay').style.display='block'; }
+        function closeM() { document.getElementById('menu').style.left='-260px'; document.getElementById('m-overlay').style.display='none'; }
+    </script>
+</body>
+</html>
