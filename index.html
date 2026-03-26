@@ -168,7 +168,7 @@
                     99: { opts: ["far", "further", "furthest"], corr: "further" },
                     100: { opts: ["since", "yet", "during"], corr: "yet" },
                     101: { opts: ["That", "While", "Except"], corr: "While" },
-                    102: { opts: ["another", "every", "most"], corr: "every" },
+                    102: { opts: ["another", "every", "most"], corr: "most" },
                     103: { opts: ["discovered", "discover", "discovering"], corr: "discovered" },
                     104: { opts: ["then", "again", "always"], corr: "always" }
                 }
@@ -196,8 +196,8 @@
                     </div>
                 </div>`;
             document.querySelectorAll('#menu a').forEach(a => a.classList.remove('active'));
-            const menuLink = document.getElementById('menu-' + id);
-            if(menuLink) menuLink.classList.add('active');
+            const activeLink = document.getElementById('menu-' + id);
+            if(activeLink) activeLink.classList.add('active');
             closeM(); window.scrollTo(0,0);
         }
 
