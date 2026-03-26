@@ -10,22 +10,36 @@
         header { background: var(--w); height: 60px; display: flex; align-items: center; padding: 0 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #d1d1d6; }
         .btn-menu { font-size: 26px; color: var(--a); cursor: pointer; background: none; border: none; padding: 5px; }
         header h1 { font-size: 16px; margin: 0 auto; text-transform: uppercase; letter-spacing: 1px; }
-        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
-        .reading-card { background: var(--w); padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; position: relative; }
+        .reading-card { background: var(--w); padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 1; position: relative; }
         .reading-card h2 { margin-top: 0; color: var(--p); border-bottom: 2px solid var(--bg); padding-bottom: 10px; font-size: 22px; }
+        
+        /* Gaps */
         .gap { background: #e1f0ff; color: var(--a); padding: 2px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; border: 1px dashed var(--a); display: inline-block; margin: 2px 0; -webkit-tap-highlight-color: transparent; }
         .gap.filled { background: #d1e9ff; color: #1a2a3a; border-style: solid; }
         .gap.correct { background-color: #e8fdf0 !important; color: var(--s) !important; border-color: var(--s) !important; }
         .gap.incorrect { background-color: #fff1f0 !important; color: var(--e) !important; border-color: var(--e) !important; }
-        .check-btn { width: 100%; margin-top: 20px; background: var(--s); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        
+        .check-btn { width: 100%; margin-top: 20px; background: var(--s); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; }
+
+        /* Navegación Lateral (En el medio) */
+        .nav-side { position: fixed; top: 50%; transform: translateY(-50%); width: 45px; height: 45px; background: var(--p); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 10; opacity: 0.8; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .nav-side:disabled { background: #ccc; opacity: 0.3; cursor: not-allowed; }
+        .nav-prev { left: 10px; }
+        .nav-next { right: 10px; }
+
         .results-panel { margin-top: 20px; padding: 15px; background: #fff; border-radius: 12px; display: none; border: 2px solid #eee; text-align: center; }
         .score-box { display: flex; justify-content: space-around; margin-top: 10px; }
         .score-item { font-size: 13px; font-weight: bold; }
         .score-count { font-size: 22px; display: block; font-weight: 800; }
+        
+        /* Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-        .modal { background: var(--w); width: 85%; max-width: 320px; border-radius: 20px; padding: 20px; text-align: center; animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal { background: var(--w); width: 85%; max-width: 320px; border-radius: 20px; padding: 20px; text-align: center; animation: pop 0.3s ease; }
         .opt-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; background: #f9f9f9; font-size: 17px; cursor: pointer; }
+        
+        /* Menu */
         #menu { height: 100%; width: 270px; position: fixed; top: 0; left: -270px; background: var(--p); transition: 0.3s ease; z-index: 300; padding-top: 10px; overflow-y: auto; }
         #menu .menu-header { color: white; padding: 20px; font-weight: bold; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #2c3e50; }
         #menu a { color: white; padding: 18px 20px; text-decoration: none; display: block; border-bottom: 1px solid #2c3e50; font-size: 16px; }
@@ -36,7 +50,7 @@
 <body>
 
     <div id="menu">
-        <div class="menu-header">Ejercicios Disponibles</div>
+        <div class="menu-header">Ejercicios</div>
         <a href="#" onclick="loadText(1)" id="menu-1">1. Luthiers</a>
         <a href="#" onclick="loadText(2)" id="menu-2">2. Repair Cafés</a>
         <a href="#" onclick="loadText(3)" id="menu-3">3. Music Writer</a>
@@ -55,139 +69,42 @@
 
     <div class="container" id="main-content"></div>
 
+    <button class="nav-side nav-prev" id="btn-prev" onclick="navText(-1)">‹</button>
+    <button class="nav-side nav-next" id="btn-next" onclick="navText(1)">›</button>
+
     <div class="modal-overlay" id="modal-overlay" onclick="closePop(event)">
         <div class="modal"><h3 style="margin:0 0 10px 0; color:#555;">Opciones</h3><div id="options-box"></div></div>
     </div>
 
     <script>
         const textDatabase = {
-            1: {
-                title: "Luthiers",
-                content: `A luthier is a person who builds musical instruments and (0)_______ them beautiful and useful. They are usually able to work on different instruments; however, they <span class="gap" data-id="100" onclick="showPop(100)">100</span> choose instruments that belong to a type, like violins and guitars that are <span class="gap" data-id="101" onclick="showPop(101)">101</span> similar. <br><br> They use <span class="gap" data-id="102" onclick="showPop(102)">102</span> materials, from wood to metal, and a variety of machines and equipment to cut and put the parts together to make amazing instruments, <span class="gap" data-id="103" onclick="showPop(103)">103</span> are played by awesome musicians. <br><br> Sometimes, instruments get <span class="gap" data-id="104" onclick="showPop(104)">104</span> because they are old, or they stop working <span class="gap" data-id="105" onclick="showPop(105)">105</span> an accident. So, repairing instruments is <span class="gap" data-id="106" onclick="showPop(106)">106</span> part of a luthier’s job. <br><br> There are some facts you have to know <span class="gap" data-id="107" onclick="showPop(107)">107</span> you’d like to be a luthier.`,
-                questions: {
-                    100: { opts: ["often", "once", "ever"], corr: "often" },
-                    101: { opts: ["enough", "over", "quite"], corr: "quite" },
-                    102: { opts: ["every", "several", "less"], corr: "several" },
-                    103: { opts: ["where", "which", "who"], corr: "which" },
-                    104: { opts: ["break", "breaking", "broken"], corr: "broken" },
-                    105: { opts: ["after", "along", "around"], corr: "after" },
-                    106: { opts: ["both", "either", "another"], corr: "another" },
-                    107: { opts: ["so", "if", "while"], corr: "if" }
-                }
-            },
-            2: {
-                title: "Repair Cafés",
-                content: `Repair Cafés are free meeting places (0)_______ you'll find equipment and specialists who will help you make things as good as new. Visitors from <span class="gap" data-id="105" onclick="showPop(105)">105</span> the world bring broken objects such as furniture or laptops, and work among people with amazing technical abilities in <span class="gap" data-id="106" onclick="showPop(106)">106</span> fields. <br><br> If you don’t have <span class="gap" data-id="107" onclick="showPop(107)">107</span> that needs repairing, you can still stay and enjoy a delicious snack. At the same time you can help someone <span class="gap" data-id="108" onclick="showPop(108)">108</span>. <br><br> Martina Becker <span class="gap" data-id="109" onclick="showPop(109)">109</span> the first Repair Café in Amsterdam in 2009. <span class="gap" data-id="110" onclick="showPop(110)">110</span> she was working there, she dreamed of opening the Repair Café Foundation. She finally did so some years later. This organization has offered help in building new cafés in the Netherlands <span class="gap" data-id="111" onclick="showPop(111)">111</span> 2011. Today, Martina feels the <span class="gap" data-id="112" onclick="showPop(112)">112</span> person on the planet.`,
-                questions: {
-                    105: { opts: ["above", "outside", "around"], corr: "around" },
-                    106: { opts: ["several", "each", "much"], corr: "several" },
-                    107: { opts: ["anything", "anywhere", "anyone"], corr: "anything" },
-                    108: { opts: ["once", "else", "enough"], corr: "else" },
-                    109: { opts: ["began", "begin", "begun"], corr: "began" },
-                    110: { opts: ["So", "While", "Except"], corr: "While" },
-                    111: { opts: ["since", "for", "until"], corr: "since" },
-                    112: { opts: ["lucky", "luckier", "luckiest"], corr: "luckiest" }
-                }
-            },
-            3: {
-                title: "Music Writer",
-                content: `I'm a music writer and play (0)_______ instruments. I like making music <span class="gap" data-id="97" onclick="showPop(97)">97</span> real sounds recorded from different places. So, I take the music that I <span class="gap" data-id="98" onclick="showPop(98)">98</span> created in the studio and I play it in concerts. <br><br> I record on the computer like <span class="gap" data-id="99" onclick="showPop(99)">99</span> does it today, and I also play real instruments. I edit all the music <span class="gap" data-id="100" onclick="showPop(100)">100</span> with the help of a computer. <br><br> I would say I spend <span class="gap" data-id="101" onclick="showPop(101)">101</span> of the time doing that. But it doesn't matter because now I know that music is a bridge <span class="gap" data-id="102" onclick="showPop(102)">102</span> the audience and the story, and it has <span class="gap" data-id="103" onclick="showPop(103)">103</span> a key part in films and plays. <br><br> Finally, I decided to continue working <span class="gap" data-id="104" onclick="showPop(104)">104</span> on this kind of music field because my job is the best experience.`,
-                questions: {
-                    97: { opts: ["uses", "use", "using"], corr: "using" },
-                    98: { opts: ["having", "has", "have"], corr: "have" },
-                    99: { opts: ["everybody", "everything", "somebody"], corr: "everybody" },
-                    100: { opts: ["yourself", "myself", "herself"], corr: "myself" },
-                    101: { opts: ["many", "most", "few"], corr: "most" },
-                    102: { opts: ["around", "between", "inside"], corr: "between" },
-                    103: { opts: ["becomes", "became", "become"], corr: "become" },
-                    104: { opts: ["hardest", "hard", "hardly"], corr: "hard" }
-                }
-            },
-            4: {
-                title: "Lynda Carter",
-                content: `Lynda Carter, the American star, wasn't really popular as a schoolchild because she wasn't very good-looking. As she was (o)_______ than most boys, they usually laughed at her. She was <span class="gap" data-id="100" onclick="showPop(100)">100</span> called "Olive", like Popeye's thin girlfriend. <br><br> At the age of 15, she wanted to become a singer <span class="gap" data-id="101" onclick="showPop(101)">101</span> she changed the spelling of her first name from Linda to Lynda because she always said to <span class="gap" data-id="102" onclick="showPop(102)">102</span> it seemed more interesting. Two years later, she was singing in two different groups and traveling all <span class="gap" data-id="103" onclick="showPop(103)">103</span> the country. <br><br> In 1974, Lynda went to Los Angeles and <span class="gap" data-id="104" onclick="showPop(104)">104</span> acting on television. She <span class="gap" data-id="105" onclick="showPop(105)">105</span> continued playing her music at concerts, and recorded her only album, Portrait. Later, she was <span class="gap" data-id="106" onclick="showPop(106)">106</span> to act in "Wonder Woman". It was a successful TV program that <span class="gap" data-id="107" onclick="showPop(107)">107</span> loved.`,
-                questions: {
-                    100: { opts: ["anyway", "however", "even"], corr: "even" },
-                    101: { opts: ["so", "as", "if"], corr: "so" },
-                    102: { opts: ["himself", "herself", "yourself"], corr: "herself" },
-                    103: { opts: ["among", "over", "beside"], corr: "over" },
-                    104: { opts: ["beginning", "begin", "began"], corr: "began" },
-                    105: { opts: ["also", "just", "once"], corr: "also" },
-                    106: { opts: ["invite", "inviting", "invited"], corr: "invited" },
-                    107: { opts: ["everyone", "something", "everything"], corr: "everyone" }
-                }
-            },
-            5: {
-                title: "Perfume",
-                content: `People have always (0)_______ perfume to help them smell good. <span class="gap" data-id="97" onclick="showPop(97)">97</span> centuries, people have added different things to perfumes, especially oils taken from plants and animals. In the factories <span class="gap" data-id="98" onclick="showPop(98)">98</span> they're mixed, the air is always filled with a special smell that everyone <span class="gap" data-id="99" onclick="showPop(99)">99</span>. <br><br> The first perfumes came from the earliest groups of people in history. <span class="gap" data-id="100" onclick="showPop(100)">100</span> 2005, it was discovered that the world's first perfumes were made in European countries, <span class="gap" data-id="101" onclick="showPop(101)">101</span> Cyprus and France. <span class="gap" data-id="102" onclick="showPop(102)">102</span> of those perfumes are still in perfect condition because they were carefully preserved in bottles during years. <br><br> <span class="gap" data-id="103" onclick="showPop(103)">103</span> you want your perfume to have a strong smell, body temperature is important. Just put some on the warm parts of your body. <span class="gap" data-id="104" onclick="showPop(104)">104</span> home without wearing your favorite perfume is something you shouldn't do.`,
-                questions: {
-                    97: { opts: ["Since", "Across", "For"], corr: "For" },
-                    98: { opts: ["which", "who", "where"], corr: "where" },
-                    99: { opts: ["loving", "loves", "love"], corr: "loves" },
-                    100: { opts: ["On", "In", "At"], corr: "In" },
-                    101: { opts: ["like", "through", "along"], corr: "like" },
-                    102: { opts: ["Both", "Any", "Most"], corr: "Most" },
-                    103: { opts: ["So", "If", "While"], corr: "If" },
-                    104: { opts: ["Left", "Leaves", "Leaving"], corr: "Leaving" }
-                }
-            },
-            6: {
-                title: "FIFA World Cup",
-                content: `TVs are (0)_______ on. The FIFA World Cup, the biggest soccer event, has <span class="gap" data-id="97" onclick="showPop(97)">97</span> begun. Soccer is a very popular sport; I would say it is the one with the most fans, <span class="gap" data-id="98" onclick="showPop(98)">98</span> it? Actually, the FIFA World Cup has always <span class="gap" data-id="99" onclick="showPop(99)">99</span> a great show. <br><br> Before 1978, not many teams could take part in the competition, <span class="gap" data-id="100" onclick="showPop(100)">100</span> then included few countries. Teams from Europe and South America are usually <span class="gap" data-id="101" onclick="showPop(101)">101</span> than those from Asia or Africa. <br><br> Brazil has played all the World Cups but spent many years without winning a title until 1970, when they played <span class="gap" data-id="102" onclick="showPop(102)">102</span> Italy. This was a really exciting match! <span class="gap" data-id="103" onclick="showPop(103)">103</span> 90 minutes of emotion, Brazil got the great prize. <br><br> So, stay where you are. You <span class="gap" data-id="104" onclick="showPop(104)">104</span> leave your seat. The first goal is coming soon.`,
-                questions: {
-                    97: { opts: ["still", "just", "yet"], corr: "just" },
-                    98: { opts: ["isn't", "hasn't", "doesn't"], corr: "isn't" },
-                    99: { opts: ["offering", "offer", "offered"], corr: "offered" },
-                    100: { opts: ["which", "who", "where"], corr: "which" },
-                    101: { opts: ["strong", "stronger", "strongest"], corr: "stronger" },
-                    102: { opts: ["across", "against", "among"], corr: "against" },
-                    103: { opts: ["Along", "Around", "After"], corr: "After" },
-                    104: { opts: ["needn't", "mustn't", "wouldn't"], corr: "mustn't" }
-                }
-            },
-            7: {
-                title: "Grandma Gatewood",
-                content: `This strange story (0)_______ in April 1955. On a foggy morning, Emma Gatewood, an American school teacher, told her family, "I will go for a walk after breakfast." She left her small Ohio town with the clothes she had on and less <span class="gap" data-id="98" onclick="showPop(98)">98</span> US$200. No one <span class="gap" data-id="99" onclick="showPop(99)">99</span> guess her plans: not one of her 11 children or her 23 grandchildren. <br><br> At the age of 67, Emma became the first woman <span class="gap" data-id="100" onclick="showPop(100)">100</span> walked the Appalachian Trail, a 2,050-mile way <span class="gap" data-id="101" onclick="showPop(101)">101</span> forests and mountains. She didn't have <span class="gap" data-id="102" onclick="showPop(102)">102</span> money or good equipment, but during her long journey, people helped her <span class="gap" data-id="103" onclick="showPop(103)">103</span> she went. <br><br> Today, even sixty years later, "Grandma" Gatewood’s story is <span class="gap" data-id="104" onclick="showPop(104)">104</span> amazing. Her story shows how any person can <span class="gap" data-id="105" onclick="showPop(105)">105</span> stronger than they were before.`,
-                questions: {
-                    98: { opts: ["than", "as", "that"], corr: "than" },
-                    99: { opts: ["could", "must", "shall"], corr: "could" },
-                    100: { opts: ["where", "who", "which"], corr: "who" },
-                    101: { opts: ["under", "until", "through"], corr: "through" },
-                    102: { opts: ["few", "enough", "little"], corr: "enough" },
-                    103: { opts: ["everyone", "everywhere", "everything"], corr: "everywhere" },
-                    104: { opts: ["ever", "still", "already"], corr: "still" },
-                    105: { opts: ["become", "became", "becoming"], corr: "become" }
-                }
-            },
-            8: {
-                title: "The Yeti",
-                content: `The Yeti, (0)_______ is a strange type of monster, is now well-known. Since long ago, people have believed they have seen it <span class="gap" data-id="97" onclick="showPop(97)">97</span> food in Asian hills. A <span class="gap" data-id="98" onclick="showPop(98)">98</span> expeditions have tried to find it in the mountains of China, Nepal and <span class="gap" data-id="99" onclick="showPop(99)">99</span>, but it hasn't <span class="gap" data-id="100" onclick="showPop(100)">100</span> been possible to take a photo of the Yeti. <br><br> The Yeti seems to be huge, white and heavy. <span class="gap" data-id="101" onclick="showPop(101)">101</span> this is the way it is often described, it is said that Yetis come in a variety of shapes, so this is probably not its <span class="gap" data-id="102" onclick="showPop(102)">102</span> usual form. <br><br> The fact that this creature hasn't been <span class="gap" data-id="103" onclick="showPop(103)">103</span> yet doesn't mean that it doesn't exist, but that it could be shy and afraid of humans. For this reason, this animal - real or not - will <span class="gap" data-id="104" onclick="showPop(104)">104</span> be part of our stories.`,
-                questions: {
-                    97: { opts: ["collects", "collected", "collecting"], corr: "collecting" },
-                    98: { opts: ["few", "little", "much"], corr: "few" },
-                    99: { opts: ["far", "further", "furthest"], corr: "further" },
-                    100: { opts: ["since", "yet", "during"], corr: "yet" },
-                    101: { opts: ["That", "While", "Except"], corr: "While" },
-                    102: { opts: ["another", "every", "most"], corr: "most" },
-                    103: { opts: ["discovered", "discover", "discovering"], corr: "discovered" },
-                    104: { opts: ["then", "again", "always"], corr: "always" }
-                }
-            }
+            1: { title: "Luthiers", content: `A luthier is a person who builds musical instruments and (0)_______ them beautiful and useful. They are usually able to work on different instruments; however, they <span class="gap" data-id="100" onclick="showPop(100)">100</span> choose instruments that belong to a type, like violins and guitars that are <span class="gap" data-id="101" onclick="showPop(101)">101</span> similar. <br><br> They use <span class="gap" data-id="102" onclick="showPop(102)">102</span> materials, from wood to metal, and a variety of machines and equipment to cut and put the parts together to make amazing instruments, <span class="gap" data-id="103" onclick="showPop(103)">103</span> are played by awesome musicians. <br><br> Sometimes, instruments get <span class="gap" data-id="104" onclick="showPop(104)">104</span> because they are old, or they stop working <span class="gap" data-id="105" onclick="showPop(105)">105</span> an accident. So, repairing instruments is <span class="gap" data-id="106" onclick="showPop(106)">106</span> part of a luthier’s job. <br><br> There are some facts you have to know <span class="gap" data-id="107" onclick="showPop(107)">107</span> you’d like to be a luthier.`, questions: { 100: { opts: ["often", "once", "ever"], corr: "often" }, 101: { opts: ["enough", "over", "quite"], corr: "quite" }, 102: { opts: ["every", "several", "less"], corr: "several" }, 103: { opts: ["where", "which", "who"], corr: "which" }, 104: { opts: ["break", "breaking", "broken"], corr: "broken" }, 105: { opts: ["after", "along", "around"], corr: "after" }, 106: { opts: ["both", "either", "another"], corr: "another" }, 107: { opts: ["so", "if", "while"], corr: "if" } } },
+            2: { title: "Repair Cafés", content: `Repair Cafés are free meeting places (0)_______ you'll find equipment and specialists who will help you make things as good as new. Visitors from <span class="gap" data-id="105" onclick="showPop(105)">105</span> the world bring broken objects such as furniture or laptops, and work among people with amazing technical abilities in <span class="gap" data-id="106" onclick="showPop(106)">106</span> fields. <br><br> If you don’t have <span class="gap" data-id="107" onclick="showPop(107)">107</span> that needs repairing, you can still stay and enjoy a delicious snack. At the same time you can help someone <span class="gap" data-id="108" onclick="showPop(108)">108</span>. <br><br> Martina Becker <span class="gap" data-id="109" onclick="showPop(109)">109</span> the first Repair Café in Amsterdam in 2009. <span class="gap" data-id="110" onclick="showPop(110)">110</span> she was working there, she dreamed of opening the Repair Café Foundation. She finally did so some years later. This organization has offered help in building new cafés in the Netherlands <span class="gap" data-id="111" onclick="showPop(111)">111</span> 2011. Today, Martina feels the <span class="gap" data-id="112" onclick="showPop(112)">112</span> person on the planet.`, questions: { 105: { opts: ["above", "outside", "around"], corr: "around" }, 106: { opts: ["several", "each", "much"], corr: "several" }, 107: { opts: ["anything", "anywhere", "anyone"], corr: "anything" }, 108: { opts: ["once", "else", "enough"], corr: "else" }, 109: { opts: ["began", "begin", "begun"], corr: "began" }, 110: { opts: ["So", "While", "Except"], corr: "While" }, 111: { opts: ["since", "for", "until"], corr: "since" }, 112: { opts: ["lucky", "luckier", "luckiest"], corr: "luckiest" } } },
+            3: { title: "Music Writer", content: `I'm a music writer and play (0)_______ instruments. I like making music <span class="gap" data-id="97" onclick="showPop(97)">97</span> real sounds recorded from different places. So, I take the music that I <span class="gap" data-id="98" onclick="showPop(98)">98</span> created in the studio and I play it in concerts. <br><br> I record on the computer like <span class="gap" data-id="99" onclick="showPop(99)">99</span> does it today, and I also play real instruments. I edit all the music <span class="gap" data-id="100" onclick="showPop(100)">100</span> with the help of a computer. <br><br> I would say I spend <span class="gap" data-id="101" onclick="showPop(101)">101</span> of the time doing that. But it doesn't matter because now I know that music is a bridge <span class="gap" data-id="102" onclick="showPop(102)">102</span> the audience and the story, and it has <span class="gap" data-id="103" onclick="showPop(103)">103</span> a key part in films and plays. <br><br> Finally, I decided to continue working <span class="gap" data-id="104" onclick="showPop(104)">104</span> on this kind of music field because my job is the best experience.`, questions: { 97: { opts: ["uses", "use", "using"], corr: "using" }, 98: { opts: ["having", "has", "have"], corr: "have" }, 99: { opts: ["everybody", "everything", "somebody"], corr: "everybody" }, 100: { opts: ["yourself", "myself", "herself"], corr: "myself" }, 101: { opts: ["many", "most", "few"], corr: "most" }, 102: { opts: ["around", "between", "inside"], corr: "between" }, 103: { opts: ["becomes", "became", "become"], corr: "become" }, 104: { opts: ["hardest", "hard", "hardly"], corr: "hard" } } },
+            4: { title: "Lynda Carter", content: `Lynda Carter, the American star, wasn't really popular as a schoolchild because she wasn't very good-looking. As she was (o)_______ than most boys, they usually laughed at her. She was <span class="gap" data-id="100" onclick="showPop(100)">100</span> called "Olive", like Popeye's thin girlfriend. <br><br> At the age of 15, she wanted to become a singer <span class="gap" data-id="101" onclick="showPop(101)">101</span> she changed the spelling of her first name from Linda to Lynda because she always said to <span class="gap" data-id="102" onclick="showPop(102)">102</span> it seemed more interesting. Two years later, she was singing in two different groups and traveling all <span class="gap" data-id="103" onclick="showPop(103)">103</span> the country. <br><br> In 1974, Lynda went to Los Angeles and <span class="gap" data-id="104" onclick="showPop(104)">104</span> acting on television. She <span class="gap" data-id="105" onclick="showPop(105)">105</span> continued playing her music at concerts, and recorded her only album, Portrait. Later, she was <span class="gap" data-id="106" onclick="showPop(106)">106</span> to act in "Wonder Woman". It was a successful TV program that <span class="gap" data-id="107" onclick="showPop(107)">107</span> loved.`, questions: { 100: { opts: ["anyway", "however", "even"], corr: "even" }, 101: { opts: ["so", "as", "if"], corr: "so" }, 102: { opts: ["himself", "herself", "yourself"], corr: "herself" }, 103: { opts: ["among", "over", "beside"], corr: "over" }, 104: { opts: ["beginning", "begin", "began"], corr: "began" }, 105: { opts: ["also", "just", "once"], corr: "also" }, 106: { opts: ["invite", "inviting", "invited"], corr: "invited" }, 107: { opts: ["everyone", "something", "everything"], corr: "everyone" } } },
+            5: { title: "Perfume", content: `People have always (0)_______ perfume to help them smell good. <span class="gap" data-id="97" onclick="showPop(97)">97</span> centuries, people have added different things to perfumes, especially oils taken from plants and animals. In the factories <span class="gap" data-id="98" onclick="showPop(98)">98</span> they're mixed, the air is always filled with a special smell that everyone <span class="gap" data-id="99" onclick="showPop(99)">99</span>. <br><br> The first perfumes came from the earliest groups of people in history. <span class="gap" data-id="100" onclick="showPop(100)">100</span> 2005, it was discovered that the world's first perfumes were made in European countries, <span class="gap" data-id="101" onclick="showPop(101)">101</span> Cyprus and France. <span class="gap" data-id="102" onclick="showPop(102)">102</span> of those perfumes are still in perfect condition because they were carefully preserved in bottles during years. <br><br> <span class="gap" data-id="103" onclick="showPop(103)">103</span> you want your perfume to have a strong smell, body temperature is important. Just put some on the warm parts of your body. <span class="gap" data-id="104" onclick="showPop(104)">104</span> home without wearing your favorite perfume is something you shouldn't do.`, questions: { 97: { opts: ["Since", "Across", "For"], corr: "For" }, 98: { opts: ["which", "who", "where"], corr: "where" }, 99: { opts: ["loving", "loves", "love"], corr: "loves" }, 100: { opts: ["On", "In", "At"], corr: "In" }, 101: { opts: ["like", "through", "along"], corr: "like" }, 102: { opts: ["Both", "Any", "Most"], corr: "Most" }, 103: { opts: ["So", "If", "While"], corr: "If" }, 104: { opts: ["Left", "Leaves", "Leaving"], corr: "Leaving" } } },
+            6: { title: "FIFA World Cup", content: `TVs are (0)_______ on. The FIFA World Cup, the biggest soccer event, has <span class="gap" data-id="97" onclick="showPop(97)">97</span> begun. Soccer is a very popular sport; I would say it is the one with the most fans, <span class="gap" data-id="98" onclick="showPop(98)">98</span> it? Actually, the FIFA World Cup has always <span class="gap" data-id="99" onclick="showPop(99)">99</span> a great show. <br><br> Before 1978, not many teams could take part in the competition, <span class="gap" data-id="100" onclick="showPop(100)">100</span> then included few countries. Teams from Europe and South America are usually <span class="gap" data-id="101" onclick="showPop(101)">101</span> than those from Asia or Africa. <br><br> Brazil has played all the World Cups but spent many years without winning a title until 1970, when they played <span class="gap" data-id="102" onclick="showPop(102)">102</span> Italy. This was a really exciting match! <span class="gap" data-id="103" onclick="showPop(103)">103</span> 90 minutes of emotion, Brazil got the great prize. <br><br> So, stay where you are. You <span class="gap" data-id="104" onclick="showPop(104)">104</span> leave your seat. The first goal is coming soon.`, questions: { 97: { opts: ["still", "just", "yet"], corr: "just" }, 98: { opts: ["isn't", "hasn't", "doesn't"], corr: "isn't" }, 99: { opts: ["offering", "offer", "offered"], corr: "offered" }, 100: { opts: ["which", "who", "where"], corr: "which" }, 101: { opts: ["strong", "stronger", "strongest"], corr: "stronger" }, 102: { opts: ["across", "against", "among"], corr: "against" }, 103: { opts: ["Along", "Around", "After"], corr: "After" }, 104: { opts: ["needn't", "mustn't", "wouldn't"], corr: "mustn't" } } },
+            7: { title: "Grandma Gatewood", content: `This strange story (0)_______ in April 1955. On a foggy morning, Emma Gatewood, an American school teacher, told her family, "I will go for a walk after breakfast." She left her small Ohio town with the clothes she had on and less <span class="gap" data-id="98" onclick="showPop(98)">98</span> US$200. No one <span class="gap" data-id="99" onclick="showPop(99)">99</span> guess her plans: not one of her 11 children or her 23 grandchildren. <br><br> At the age of 67, Emma became the first woman <span class="gap" data-id="100" onclick="showPop(100)">100</span> walked the Appalachian Trail, a 2,050-mile way <span class="gap" data-id="101" onclick="showPop(101)">101</span> forests and mountains. She didn't have <span class="gap" data-id="102" onclick="showPop(102)">102</span> money or good equipment, but during her long journey, people helped her <span class="gap" data-id="103" onclick="showPop(103)">103</span> she went. <br><br> Today, even sixty years later, "Grandma" Gatewood’s story is <span class="gap" data-id="104" onclick="showPop(104)">104</span> amazing. Her story shows how any person can <span class="gap" data-id="105" onclick="showPop(105)">105</span> stronger than they were before.`, questions: { 98: { opts: ["than", "as", "that"], corr: "than" }, 99: { opts: ["could", "must", "shall"], corr: "could" }, 100: { opts: ["where", "who", "which"], corr: "who" }, 101: { opts: ["under", "until", "through"], corr: "through" }, 102: { opts: ["few", "enough", "little"], corr: "enough" }, 103: { opts: ["everyone", "everywhere", "everything"], corr: "everywhere" }, 104: { opts: ["ever", "still", "already"], corr: "still" }, 105: { opts: ["become", "became", "becoming"], corr: "become" } } },
+            8: { title: "The Yeti", content: `The Yeti, (0)_______ is a strange type of monster, is now well-known. Since long ago, people have believed they have seen it <span class="gap" data-id="97" onclick="showPop(97)">97</span> food in Asian hills. A <span class="gap" data-id="98" onclick="showPop(98)">98</span> expeditions have tried to find it in the mountains of China, Nepal and <span class="gap" data-id="99" onclick="showPop(99)">99</span>, but it hasn't <span class="gap" data-id="100" onclick="showPop(100)">100</span> been possible to take a photo of the Yeti. <br><br> The Yeti seems to be huge, white and heavy. <span class="gap" data-id="101" onclick="showPop(101)">101</span> this is the way it is often described, it is said that Yetis come in a variety of shapes, so this is probably not its <span class="gap" data-id="102" onclick="showPop(102)">102</span> usual form. <br><br> The fact that this creature hasn't been <span class="gap" data-id="103" onclick="showPop(103)">103</span> yet doesn't mean that it doesn't exist, but that it could be shy and afraid of humans. For this reason, this animal - real or not - will <span class="gap" data-id="104" onclick="showPop(104)">104</span> be part of our stories.`, questions: { 97: { opts: ["collects", "collected", "collecting"], corr: "collecting" }, 98: { opts: ["few", "little", "much"], corr: "few" }, 99: { opts: ["far", "further", "furthest"], corr: "further" }, 100: { opts: ["since", "yet", "during"], corr: "yet" }, 101: { opts: ["That", "While", "Except"], corr: "While" }, 102: { opts: ["another", "every", "most"], corr: "most" }, 103: { opts: ["discovered", "discover", "discovering"], corr: "discovered" }, 104: { opts: ["then", "again", "always"], corr: "always" } } }
         };
 
-        let currentId = null, currentGapId = null;
+        let currentId = 1;
 
         function loadText(id) {
             currentId = id;
             const data = textDatabase[id];
+            const isFirst = id === 1;
+            const isLast = id === Object.keys(textDatabase).length;
+
             document.getElementById('app-title').innerText = "TEXTO " + id;
             document.getElementById('main-content').innerHTML = `
                 <div class="reading-card">
                     <h2>${data.title}</h2>
                     <p>${data.content}</p>
                     <button class="check-btn" onclick="checkAnswers()">Verificar Resultados ✔</button>
+                    
                     <div id="results-panel" class="results-panel">
-                        <strong>Resumen de Desempeño:</strong>
+                        <strong>Resumen:</strong>
                         <div class="score-box">
                             <div class="score-item" style="color:var(--s)">Correctas<span class="score-count" id="count-correct">0</span></div>
                             <div class="score-item" style="color:var(--e)">Incorrectas<span class="score-count" id="count-incorrect">0</span></div>
@@ -195,10 +112,20 @@
                         </div>
                     </div>
                 </div>`;
+
+            // Actualizar botones laterales
+            document.getElementById('btn-prev').disabled = isFirst;
+            document.getElementById('btn-next').disabled = isLast;
+
             document.querySelectorAll('#menu a').forEach(a => a.classList.remove('active'));
             const activeLink = document.getElementById('menu-' + id);
             if(activeLink) activeLink.classList.add('active');
             closeM(); window.scrollTo(0,0);
+        }
+
+        function navText(dir) {
+            const nextId = currentId + dir;
+            if (textDatabase[nextId]) loadText(nextId);
         }
 
         function showPop(id) {
@@ -241,6 +168,7 @@
         function closePop(e) { if(!e || e.target.id === 'modal-overlay') document.getElementById('modal-overlay').style.display = 'none'; }
         function openM() { document.getElementById('menu').style.left='0'; document.getElementById('m-overlay').style.display='block'; }
         function closeM() { document.getElementById('menu').style.left='-270px'; document.getElementById('m-overlay').style.display='none'; }
+        
         loadText(1);
     </script>
 </body>
