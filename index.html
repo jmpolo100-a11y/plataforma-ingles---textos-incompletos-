@@ -11,10 +11,17 @@
         .btn-menu { font-size: 26px; color: var(--a); cursor: pointer; background: none; border: none; padding: 5px; }
         header h1 { font-size: 16px; margin: 0 auto; text-transform: uppercase; letter-spacing: 1px; }
         
-        .container { padding: 15px; max-width: 600px; margin: 0 auto; position: relative; }
-        .reading-card { background: var(--w); padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 1; position: relative; }
-        .reading-card h2 { margin-top: 0; color: var(--p); border-bottom: 2px solid var(--bg); padding-bottom: 10px; font-size: 22px; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .reading-card { background: var(--w); padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         
+        /* Cabecera del Texto con Navegación */
+        .text-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--bg); margin-bottom: 15px; padding-bottom: 10px; }
+        .text-header h2 { margin: 0; color: var(--p); font-size: 20px; text-align: center; flex: 1; }
+        
+        .nav-btn { background: var(--p); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .nav-btn:disabled { background: #eee; color: #ccc; cursor: not-allowed; }
+        .nav-btn:active { transform: scale(0.9); }
+
         /* Gaps */
         .gap { background: #e1f0ff; color: var(--a); padding: 2px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; border: 1px dashed var(--a); display: inline-block; margin: 2px 0; -webkit-tap-highlight-color: transparent; }
         .gap.filled { background: #d1e9ff; color: #1a2a3a; border-style: solid; }
@@ -22,12 +29,6 @@
         .gap.incorrect { background-color: #fff1f0 !important; color: var(--e) !important; border-color: var(--e) !important; }
         
         .check-btn { width: 100%; margin-top: 20px; background: var(--s); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; }
-
-        /* Navegación Lateral (En el medio) */
-        .nav-side { position: fixed; top: 50%; transform: translateY(-50%); width: 45px; height: 45px; background: var(--p); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; z-index: 10; opacity: 0.8; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .nav-side:disabled { background: #ccc; opacity: 0.3; cursor: not-allowed; }
-        .nav-prev { left: 10px; }
-        .nav-next { right: 10px; }
 
         .results-panel { margin-top: 20px; padding: 15px; background: #fff; border-radius: 12px; display: none; border: 2px solid #eee; text-align: center; }
         .score-box { display: flex; justify-content: space-around; margin-top: 10px; }
@@ -39,7 +40,7 @@
         .modal { background: var(--w); width: 85%; max-width: 320px; border-radius: 20px; padding: 20px; text-align: center; animation: pop 0.3s ease; }
         .opt-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 12px; background: #f9f9f9; font-size: 17px; cursor: pointer; }
         
-        /* Menu */
+        /* Menu lateral */
         #menu { height: 100%; width: 270px; position: fixed; top: 0; left: -270px; background: var(--p); transition: 0.3s ease; z-index: 300; padding-top: 10px; overflow-y: auto; }
         #menu .menu-header { color: white; padding: 20px; font-weight: bold; font-size: 14px; text-transform: uppercase; border-bottom: 1px solid #2c3e50; }
         #menu a { color: white; padding: 18px 20px; text-decoration: none; display: block; border-bottom: 1px solid #2c3e50; font-size: 16px; }
@@ -69,9 +70,6 @@
 
     <div class="container" id="main-content"></div>
 
-    <button class="nav-side nav-prev" id="btn-prev" onclick="navText(-1)">‹</button>
-    <button class="nav-side nav-next" id="btn-next" onclick="navText(1)">›</button>
-
     <div class="modal-overlay" id="modal-overlay" onclick="closePop(event)">
         <div class="modal"><h3 style="margin:0 0 10px 0; color:#555;">Opciones</h3><div id="options-box"></div></div>
     </div>
@@ -99,7 +97,11 @@
             document.getElementById('app-title').innerText = "TEXTO " + id;
             document.getElementById('main-content').innerHTML = `
                 <div class="reading-card">
-                    <h2>${data.title}</h2>
+                    <div class="text-header">
+                        <button class="nav-btn" onclick="navText(-1)" ${isFirst ? 'disabled' : ''}>‹</button>
+                        <h2>${data.title}</h2>
+                        <button class="nav-btn" onclick="navText(1)" ${isLast ? 'disabled' : ''}>›</button>
+                    </div>
                     <p>${data.content}</p>
                     <button class="check-btn" onclick="checkAnswers()">Verificar Resultados ✔</button>
                     
@@ -112,10 +114,6 @@
                         </div>
                     </div>
                 </div>`;
-
-            // Actualizar botones laterales
-            document.getElementById('btn-prev').disabled = isFirst;
-            document.getElementById('btn-next').disabled = isLast;
 
             document.querySelectorAll('#menu a').forEach(a => a.classList.remove('active'));
             const activeLink = document.getElementById('menu-' + id);
