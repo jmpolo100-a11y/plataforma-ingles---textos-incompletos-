@@ -43,6 +43,8 @@
         <a href="#" onclick="loadText(4)" id="menu-4">4. Lynda Carter</a>
         <a href="#" onclick="loadText(5)" id="menu-5">5. Perfume</a>
         <a href="#" onclick="loadText(6)" id="menu-6">6. FIFA World Cup</a>
+        <a href="#" onclick="loadText(7)" id="menu-7">7. Grandma Gatewood</a>
+        <a href="#" onclick="loadText(8)" id="menu-8">8. The Yeti</a>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
 
@@ -142,6 +144,34 @@
                     103: { opts: ["Along", "Around", "After"], corr: "After" },
                     104: { opts: ["needn't", "mustn't", "wouldn't"], corr: "mustn't" }
                 }
+            },
+            7: {
+                title: "Grandma Gatewood",
+                content: `This strange story (0)_______ in April 1955. On a foggy morning, Emma Gatewood, an American school teacher, told her family, "I will go for a walk after breakfast." She left her small Ohio town with the clothes she had on and less <span class="gap" data-id="98" onclick="showPop(98)">98</span> US$200. No one <span class="gap" data-id="99" onclick="showPop(99)">99</span> guess her plans: not one of her 11 children or her 23 grandchildren. <br><br> At the age of 67, Emma became the first woman <span class="gap" data-id="100" onclick="showPop(100)">100</span> walked the Appalachian Trail, a 2,050-mile way <span class="gap" data-id="101" onclick="showPop(101)">101</span> forests and mountains. She didn't have <span class="gap" data-id="102" onclick="showPop(102)">102</span> money or good equipment, but during her long journey, people helped her <span class="gap" data-id="103" onclick="showPop(103)">103</span> she went. <br><br> Today, even sixty years later, "Grandma" Gatewood’s story is <span class="gap" data-id="104" onclick="showPop(104)">104</span> amazing. Her story shows how any person can <span class="gap" data-id="105" onclick="showPop(105)">105</span> stronger than they were before.`,
+                questions: {
+                    98: { opts: ["than", "as", "that"], corr: "than" },
+                    99: { opts: ["could", "must", "shall"], corr: "could" },
+                    100: { opts: ["where", "who", "which"], corr: "who" },
+                    101: { opts: ["under", "until", "through"], corr: "through" },
+                    102: { opts: ["few", "enough", "little"], corr: "enough" },
+                    103: { opts: ["everyone", "everywhere", "everything"], corr: "everywhere" },
+                    104: { opts: ["ever", "still", "already"], corr: "still" },
+                    105: { opts: ["become", "became", "becoming"], corr: "become" }
+                }
+            },
+            8: {
+                title: "The Yeti",
+                content: `The Yeti, (0)_______ is a strange type of monster, is now well-known. Since long ago, people have believed they have seen it <span class="gap" data-id="97" onclick="showPop(97)">97</span> food in Asian hills. A <span class="gap" data-id="98" onclick="showPop(98)">98</span> expeditions have tried to find it in the mountains of China, Nepal and <span class="gap" data-id="99" onclick="showPop(99)">99</span>, but it hasn't <span class="gap" data-id="100" onclick="showPop(100)">100</span> been possible to take a photo of the Yeti. <br><br> The Yeti seems to be huge, white and heavy. <span class="gap" data-id="101" onclick="showPop(101)">101</span> this is the way it is often described, it is said that Yetis come in a variety of shapes, so this is probably not its <span class="gap" data-id="102" onclick="showPop(102)">102</span> usual form. <br><br> The fact that this creature hasn't been <span class="gap" data-id="103" onclick="showPop(103)">103</span> yet doesn't mean that it doesn't exist, but that it could be shy and afraid of humans. For this reason, this animal - real or not - will <span class="gap" data-id="104" onclick="showPop(104)">104</span> be part of our stories.`,
+                questions: {
+                    97: { opts: ["collects", "collected", "collecting"], corr: "collecting" },
+                    98: { opts: ["few", "little", "much"], corr: "few" },
+                    99: { opts: ["far", "further", "furthest"], corr: "further" },
+                    100: { opts: ["since", "yet", "during"], corr: "yet" },
+                    101: { opts: ["That", "While", "Except"], corr: "While" },
+                    102: { opts: ["another", "every", "most"], corr: "every" },
+                    103: { opts: ["discovered", "discover", "discovering"], corr: "discovered" },
+                    104: { opts: ["then", "again", "always"], corr: "always" }
+                }
             }
         };
 
@@ -166,7 +196,8 @@
                     </div>
                 </div>`;
             document.querySelectorAll('#menu a').forEach(a => a.classList.remove('active'));
-            document.getElementById('menu-' + id).classList.add('active');
+            const menuLink = document.getElementById('menu-' + id);
+            if(menuLink) menuLink.classList.add('active');
             closeM(); window.scrollTo(0,0);
         }
 
