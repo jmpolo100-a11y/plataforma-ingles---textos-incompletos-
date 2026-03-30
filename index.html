@@ -110,7 +110,7 @@
         .nav-btn-header {
             background: var(--nav-gray);
             color: var(--text);
-            border: 1px solid rgba(0,0,0,0.15); /* Borde negro sutil */
+            border: 1px solid rgba(0,0,0,0.15);
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -225,7 +225,6 @@
 
         .opt-text { flex-grow: 1; text-align: center; margin-right: 38px; }
 
-        /* RESULTADOS CON BORDES DE COLOR */
         .results-panel {
             margin-top: 25px;
             padding: 20px;
@@ -249,7 +248,6 @@
             border-style: solid;
         }
 
-        /* Colores específicos de bordes */
         .res-total { border-color: #1C1C1E; }
         .res-correct { border-color: var(--success); }
         .res-incorrect { border-color: var(--error); }
@@ -328,7 +326,17 @@
             "linear-gradient(135deg, #02aab0 0%, #00cdac 100%)", "linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%)",
             "linear-gradient(135deg, #007991 0%, #78ffd6 100%)", "linear-gradient(135deg, #4da0b0 0%, #d39d38 100%)",
             "linear-gradient(135deg, #cc2b5e 0%, #753a88 100%)", "linear-gradient(135deg, #1f4037 0%, #99f2c8 100%)",
-            "linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%)", "linear-gradient(135deg, #e65c00 0%, #F9D423 100%)"
+            "linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%)", "linear-gradient(135deg, #e65c00 0%, #F9D423 100%)",
+            "linear-gradient(135deg, #2196F3 0%, #f44336 100%)", "linear-gradient(135deg, #00F260 0%, #0575E6 100%)",
+            "linear-gradient(135deg, #e1eec3 0%, #f05053 100%)", "linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%)",
+            "linear-gradient(135deg, #22c1c3 0%, #fdbb2d 100%)", "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+            "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
+            "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)", "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+            "linear-gradient(135deg, #5eeff9 0%, #4568dc 100%)", "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+            "linear-gradient(135deg, #fa709a 0%, #fee140 100%)", "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
+            "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)", "linear-gradient(135deg, #fbed96 0%, #abecd6 100%)",
+            "linear-gradient(135deg, #81ffef 0%, #f067ff 100%)", "linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%)",
+            "linear-gradient(135deg, #D4145A 0%, #FBB03B 100%)", "linear-gradient(135deg, #662D8C 0%, #ED1E79 100%)"
         ];
 
         const textDatabase = {
@@ -351,7 +359,21 @@
             17: { title: "Joanne Rowling", content: `J. K. Rowling, the author of Harry Potter, wanted to be a writer (0)____ she was little. She got the idea for the series on a train in 1990. <span class="gap" data-id="106" onclick="showPop(106)">106</span> the next five years, she thought about the story, and by 1995 she had <span class="gap" data-id="107" onclick="showPop(107)">107</span> a plan for seven books. She ended up with <span class="gap" data-id="108" onclick="showPop(108)">108</span> boxes of notes because she wrote her stories <span class="gap" data-id="109" onclick="showPop(109)">109</span> hand. <br><br> She sent three chapters to some agents, but only one wrote back asking to see the rest of the book. Joanne felt proud of <span class="gap" data-id="110" onclick="showPop(110)">110</span> when she read that letter. <br><br> The first Harry Potter book was published in 1996. <span class="gap" data-id="111" onclick="showPop(111)">111</span> the book was translated into <span class="gap" data-id="112" onclick="showPop(112)">112</span> languages, Harry Potter became popular around the world, and now, many years later, Joanne is <span class="gap" data-id="113" onclick="showPop(113)">113</span> receiving thousands of fan letters.`, questions: { 106: { opts: ["Towards", "Over", "Upon"], corr: "Over" }, 107: { opts: ["develops", "developed", "develop"], corr: "developed" }, 108: { opts: ["several", "enough", "much"], corr: "several" }, 109: { opts: ["at", "off", "by"], corr: "by" }, 110: { opts: ["itself", "herself", "himself"], corr: "herself" }, 111: { opts: ["If", "So", "As"], corr: "As" }, 112: { opts: ["many", "such", "half"], corr: "many" }, 113: { opts: ["still", "yet", "soon"], corr: "still" } } },
             18: { title: "Fast food vs. Slow food", content: `The term "fast food" is (0)__________ for restaurants that serve cheap meals <span class="gap" data-id="98" onclick="showPop(98)">98</span> in paper bags or boxes, for example burgers and French fries. Fast food <span class="gap" data-id="99" onclick="showPop(99)">99</span> popular in the United States in the 1950s, but today, it's known that it is bad for your body. <br><br> There's also "slow food". It began in 1986 thanks to Carlo Petrini, an Italian journalist <span class="gap" data-id="100" onclick="showPop(100)">100</span> visited a McDonald's restaurant in Rome. He thought it was horrible. <br><br> <span class="gap" data-id="101" onclick="showPop(101)">101</span>, Petrini started "slow food", which is about <span class="gap" data-id="102" onclick="showPop(102)">102</span> fresh food that is cooked for a longer time; that's why this food is <span class="gap" data-id="103" onclick="showPop(103)">103</span>. It has two goals: to make the food of your town popular, and to buy food grown <span class="gap" data-id="104" onclick="showPop(104)">104</span> small farmers. This movement now has <span class="gap" data-id="105" onclick="showPop(105)">105</span> 80,000 members in 100 countries.`, questions: { 98: { opts: ["quickly", "quickest", "quicker"], corr: "quickly" }, 99: { opts: ["becoming", "become", "became"], corr: "became" }, 100: { opts: ["what", "who", "which"], corr: "who" }, 101: { opts: ["So", "If", "As"], corr: "So" }, 102: { opts: ["eat", "eaten", "eating"], corr: "eating" }, 103: { opts: ["healthiest", "health", "healthier"], corr: "healthier" }, 104: { opts: ["by", "near", "off"], corr: "by" }, 105: { opts: ["until", "over", "across"], corr: "over" } } },
             19: { title: "The Olympic Games", content: `In 1896, a French man called Pierre de Coubertin began the modern Olympics. He was (0)____ interested in sports, and he felt it would be amazing to see all the countries <span class="gap" data-id="98" onclick="showPop(98)">98</span> the world get together in a sports competition. Pierre <span class="gap" data-id="99" onclick="showPop(99)">99</span> drew the five colored rings <span class="gap" data-id="100" onclick="showPop(100)">100</span> in the Olympic Games. <br><br> Every time the games begin, carrying the Olympic fire from Greece to several countries isn't the <span class="gap" data-id="101" onclick="showPop(101)">101</span> job; actually, it's very hard. Also, <span class="gap" data-id="102" onclick="showPop(102)">102</span> country where the Olympic Games are held <span class="gap" data-id="103" onclick="showPop(103)">103</span> be chosen carefully. <br><br> The Olympic Games have <span class="gap" data-id="104" onclick="showPop(104)">104</span> the largest sports event in the world. There are Summer and Winter Games and <span class="gap" data-id="105" onclick="showPop(105)">105</span> than 30 sports are included. Certainly, the men and women who want to compete in the Olympic Games are prepared before the competition begins.`, questions: { 98: { opts: ["around", "by", "into"], corr: "around" }, 99: { opts: ["herself", "itself", "himself"], corr: "himself" }, 100: { opts: ["using", "use", "used"], corr: "used" }, 101: { opts: ["easiest", "easy", "easier"], corr: "easiest" }, 102: { opts: ["other", "each", "such"], corr: "each" }, 103: { opts: ["must", "shall", "could"], corr: "must" }, 104: { opts: ["become", "becoming", "becomes"], corr: "become" }, 105: { opts: ["soon", "more", "still"], corr: "more" } } },
-            20: { title: "CLEOPATRA", content: `One of the (0)__________ famous women in world history was Cleopatra. She was the last Pharaoh of Egypt. She became queen of Egypt in 51 B.C. <span class="gap" data-id="86" onclick="showPop(86)">86</span> the age of eighteen. She was a descendant of one of Alexander the Great's generals. When she was twenty-one, Julius Caesar became <span class="gap" data-id="87" onclick="showPop(87)">87</span> well-known lover. Seven years <span class="gap" data-id="88" onclick="showPop(88)">88</span> she met Anthony. The romantic tragic relationship continued <span class="gap" data-id="89" onclick="showPop(89)">89</span> they died by suicide in 30 B.C. <br><br> Cleopatra was legendary. She was famous not <span class="gap" data-id="90" onclick="showPop(90)">90</span> for being intelligent, but also for being beautiful. She had brown hair and brown eyes and they looked <span class="gap" data-id="91" onclick="showPop(91)">91</span> they were cats' eyes. <br><br> Cleopatra was a woman of wonderful elegance and unusual intelligence. She was <span class="gap" data-id="92" onclick="showPop(92)">92</span> educated. She <span class="gap" data-id="93" onclick="showPop(93)">93</span> speak nine languages and she was also good at mathematics.`, questions: { 86: { opts: ["on", "to", "at"], corr: "at" }, 87: { opts: ["her", "their", "his"], corr: "her" }, 88: { opts: ["while", "ago", "later"], corr: "later" }, 89: { opts: ["when", "until", "but"], corr: "until" }, 90: { opts: ["only", "yet", "rather"], corr: "only" }, 91: { opts: ["after", "for", "like"], corr: "like" }, 92: { opts: ["highly", "high", "higher"], corr: "highly" }, 93: { opts: ["should", "may", "could"], corr: "could" } } }
+            20: { title: "CLEOPATRA", content: `One of the (0)__________ famous women in world history was Cleopatra. She was the last Pharaoh of Egypt. She became queen of Egypt in 51 B.C. <span class="gap" data-id="86" onclick="showPop(86)">86</span> the age of eighteen. She was a descendant of one of Alexander the Great's generals. When she was twenty-one, Julius Caesar became <span class="gap" data-id="87" onclick="showPop(87)">87</span> well-known lover. Seven years <span class="gap" data-id="88" onclick="showPop(88)">88</span> she met Anthony. The romantic tragic relationship continued <span class="gap" data-id="89" onclick="showPop(89)">89</span> they died by suicide in 30 B.C. <br><br> Cleopatra was legendary. She was famous not <span class="gap" data-id="90" onclick="showPop(90)">90</span> for being intelligent, but also for being beautiful. She had brown hair and brown eyes and they looked <span class="gap" data-id="91" onclick="showPop(91)">91</span> they were cats' eyes. <br><br> Cleopatra was a woman of wonderful elegance and unusual intelligence. She was <span class="gap" data-id="92" onclick="showPop(92)">92</span> educated. She <span class="gap" data-id="93" onclick="showPop(93)">93</span> speak nine languages and she was also good at mathematics.`, questions: { 86: { opts: ["on", "to", "at"], corr: "at" }, 87: { opts: ["her", "their", "his"], corr: "her" }, 88: { opts: ["while", "ago", "later"], corr: "later" }, 89: { opts: ["when", "until", "but"], corr: "until" }, 90: { opts: ["only", "yet", "rather"], corr: "only" }, 91: { opts: ["after", "for", "like"], corr: "like" }, 92: { opts: ["highly", "high", "higher"], corr: "highly" }, 93: { opts: ["should", "may", "could"], corr: "could" } } },
+            21: { 
+                title: "Postcrossing", 
+                content: `Postcrossing is a website to send and receive real postcards from (o)____ around the world who is a member. Paulo Magalhães began this online project, which has been available <span class="gap" data-id="97" onclick="showPop(97)">97</span> 2005. <br><br> The number of members, called postcrosser, has <span class="gap" data-id="98" onclick="showPop(98)">98</span> quickly. By January 2019, 750,000 members in 212 countries were <span class="gap" data-id="99" onclick="showPop(99)">99</span> part in the project. Over 50 million postcards have <span class="gap" data-id="100" onclick="showPop(100)">100</span> traveled 250 billion km. <br><br> The idea is simple: for <span class="gap" data-id="101" onclick="showPop(101)">101</span> postcard you send, you will receive one from someone from a different culture. <span class="gap" data-id="102" onclick="showPop(102)">102</span> you want to join postcrossing, you will only need to fill out an online form. Then, your mail box will become the <span class="gap" data-id="103" onclick="showPop(103)">103</span> box of surprises in the world. I joined last year and got some amazing postcards. I just <span class="gap" data-id="104" onclick="showPop(104)">104</span> not believe it!`, 
+                questions: { 
+                    97: { opts: ["per", "since", "for"], corr: "since" }, 
+                    98: { opts: ["grow", "growing", "grown"], corr: "grown" }, 
+                    99: { opts: ["take", "taking", "took"], corr: "taking" }, 
+                    100: { opts: ["still", "yet", "already"], corr: "already" }, 
+                    101: { opts: ["such", "each", "other"], corr: "each" }, 
+                    102: { opts: ["Except", "while", "If"], corr: "If" }, 
+                    103: { opts: ["great", "greatest", "greater"], corr: "greatest" }, 
+                    104: { opts: ["could", "must", "shall"], corr: "could" } 
+                } 
+            }
         };
 
         let currentId = 1;
@@ -362,7 +384,7 @@
             const data = textDatabase[id];
             const isFirst = id === 1;
             const isLast = id === Object.keys(textDatabase).length;
-            const gradient = bannerGradients[id - 1] || "#f0f0f5";
+            const gradient = bannerGradients[id - 1] || "linear-gradient(135deg, #E5E5EA 0%, #D1D1D6 100%)";
 
             document.getElementById('main-content').innerHTML = `
                 <div class="reading-card">
