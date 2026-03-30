@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -122,7 +122,6 @@
             transition: all 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
         .nav-btn-header:active { transform: scale(0.9); background: #D1D1D6; }
         .nav-btn-header:disabled { opacity: 0.3; cursor: not-allowed; }
 
@@ -138,6 +137,7 @@
             border: 2px solid transparent;
             display: inline-block;
             margin: 2px 0;
+            font-size: 16px;
         }
 
         .gap.filled { border-color: var(--primary); background: #fff; color: #333; }
@@ -158,72 +158,19 @@
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.25);
         }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal {
-            background: #fff;
-            width: 88%;
-            max-width: 340px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-            animation: modalIn 0.3s ease-out;
-        }
-
-        @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .modal-header {
-            background: #F8F9FA;
-            padding: 18px;
-            text-align: center;
-            font-size: 13px;
+        .timer-container { text-align: center; margin-top: 20px; }
+        .timer-box {
+            display: inline-block;
+            background: #1C1C1E;
+            color: #34C759;
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
             font-weight: 800;
-            color: var(--subtext);
-            text-transform: uppercase;
-            border-bottom: 1px solid #EEE;
+            border: 2px solid #333;
         }
-
-        .opt-list { padding: 20px; }
-
-        .opt-btn {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 12px;
-            border: 1px solid #E5E5EA;
-            border-radius: 20px;
-            background: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .opt-letter {
-            width: 38px;
-            height: 38px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .opt-text { flex-grow: 1; text-align: center; margin-right: 38px; }
+        .timer-label { display: block; font-size: 10px; text-transform: uppercase; color: var(--subtext); font-weight: 800; margin-top: 5px; }
 
         .results-panel {
             margin-top: 25px;
@@ -234,11 +181,7 @@
             text-align: center;
             border: 1px solid #EEE;
         }
-
-        #feedback-msg { font-weight: 900; font-size: 22px; color: var(--primary); margin-bottom: 20px; display: block; }
-
         .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-
         .res-item {
             padding: 15px 5px;
             border-radius: 18px;
@@ -247,11 +190,9 @@
             border-width: 2px;
             border-style: solid;
         }
-
         .res-total { border-color: #1C1C1E; }
         .res-correct { border-color: var(--success); }
         .res-incorrect { border-color: var(--error); }
-
         .res-val { font-size: 24px; font-weight: 800; display: block; }
         .res-lab { font-size: 10px; text-transform: uppercase; font-weight: 700; color: var(--subtext); margin-top: 5px; display: block;}
 
@@ -262,16 +203,35 @@
             z-index: 300; overflow-y: auto;
             box-shadow: 5px 0 25px rgba(0,0,0,0.1);
         }
-        #menu a { color: var(--text); padding: 18px 25px; text-decoration: none; display: block; border-bottom: 1px solid #F2F2F7; font-weight: 500;}
-        #menu a.active { background: #F2F8FF; color: var(--primary); font-weight: 800; border-left: 6px solid var(--primary); }
+        #menu a { 
+            color: var(--text); padding: 18px 25px; text-decoration: none; display: block; 
+            border-bottom: 1px solid #F2F2F7; font-weight: 700; text-transform: uppercase; font-size: 13px;
+        }
+        #menu a.active { background: #F2F8FF; color: var(--primary); border-left: 6px solid var(--primary); }
 
+        .firework { position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 1000; animation: explode 1.2s ease-out forwards; }
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(5px);
+        }
+        .modal { background: #fff; width: 88%; max-width: 340px; border-radius: 28px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.2); animation: modalIn 0.3s ease-out; }
+        @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .opt-btn { display: flex; align-items: center; width: 100%; padding: 12px 15px; margin-bottom: 12px; border: 1px solid #E5E5EA; border-radius: 20px; background: #fff; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .opt-letter { width: 38px; height: 38px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; }
+        .opt-text { flex-grow: 1; text-align: center; margin-right: 38px; }
         .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 250; backdrop-filter: blur(2px);}
     </style>
 </head>
 <body>
 
     <div id="menu">
-        <div style="padding: 25px; font-size: 19px; font-weight: 900; color: var(--primary); border-bottom: 2px solid #f2f2f7;">ÍNDICE DE LECTURAS</div>
+        <div style="padding: 25px; font-size: 19px; font-weight: 900; color: var(--primary); border-bottom: 2px solid #f2f2f7;">LECTURAS</div>
         <div id="menu-list"></div>
     </div>
     <div class="menu-overlay" id="m-overlay" onclick="closeM()"></div>
@@ -283,18 +243,21 @@
     </header>
 
     <div class="progress-container"><div id="progress-bar"></div></div>
-
     <div class="container" id="main-content"></div>
 
     <div class="modal-overlay" id="modal-overlay" onclick="closePop(event)">
         <div class="modal">
-            <div class="modal-header">Elige la respuesta correcta</div>
+            <div class="modal-header" style="padding:15px; text-align:center; color:var(--subtext); font-weight:800; border-bottom:1px solid #eee;">ELIGE LA RESPUESTA CORRECTA</div>
             <div class="opt-list" id="options-box"></div>
         </div>
     </div>
 
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let seconds = 0;
+        let timerInterval;
+        let fwInterval = null;
+
         function playTone(freq, type, duration) {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -302,10 +265,8 @@
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
         }
 
         function playResultSound(isGood) {
@@ -313,6 +274,37 @@
                 playTone(523, 'sine', 0.15); setTimeout(() => playTone(659, 'sine', 0.25), 120);
             } else {
                 playTone(150, 'square', 0.4);
+            }
+        }
+
+        function playSuccessSound() {
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (i * 0.15));
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime + (i * 0.15));
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + (i * 0.15) + 0.8);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + (i * 0.15));
+                osc.stop(audioCtx.currentTime + (i * 0.15) + 0.8);
+            });
+        }
+
+        function createExplosion() {
+            playSuccessSound();
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.5;
+            for(let i=0; i<35; i++) {
+                const p = document.createElement('div');
+                p.className = 'firework';
+                p.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 65%)`;
+                p.style.left = x+'px'; p.style.top = y+'px';
+                p.style.setProperty('--x', (Math.random()*500-250)+'px');
+                p.style.setProperty('--y', (Math.random()*500-250)+'px');
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1200);
             }
         }
 
@@ -341,50 +333,53 @@
 
         const textDatabase = {
             1: { title: "Luthiers", content: `A luthier is a person who builds musical instruments and (0)_______ them beautiful and useful. They are usually able to work on different instruments; however, they <span class="gap" data-id="100" onclick="showPop(100)">100</span> choose instruments that belong to a type, like violins and guitars that are <span class="gap" data-id="101" onclick="showPop(101)">101</span> similar. <br><br> They use <span class="gap" data-id="102" onclick="showPop(102)">102</span> materials, from wood to metal, and a variety of machines and equipment to cut and put the parts together to make amazing instruments, <span class="gap" data-id="103" onclick="showPop(103)">103</span> are played by awesome musicians. <br><br> Sometimes, instruments get <span class="gap" data-id="104" onclick="showPop(104)">104</span> because they are old, or they stop working <span class="gap" data-id="105" onclick="showPop(105)">105</span> an accident. So, repairing instruments is <span class="gap" data-id="106" onclick="showPop(106)">106</span> part of a luthier’s job. <br><br> There are some facts you have to know <span class="gap" data-id="107" onclick="showPop(107)">107</span> you’d like to be a luthier.`, questions: { 100: { opts: ["often", "once", "ever"], corr: "often" }, 101: { opts: ["enough", "over", "quite"], corr: "quite" }, 102: { opts: ["every", "several", "less"], corr: "several" }, 103: { opts: ["where", "which", "who"], corr: "which" }, 104: { opts: ["break", "breaking", "broken"], corr: "broken" }, 105: { opts: ["after", "along", "around"], corr: "after" }, 106: { opts: ["both", "either", "another"], corr: "another" }, 107: { opts: ["so", "if", "while"], corr: "if" } } },
-            2: { title: "Repair Cafés", content: `Repair Cafés are free meeting places (0)_______ you'll find equipment and specialists who will help you make things as good as new. Visitors from <span class="gap" data-id="105" onclick="showPop(105)">105</span> the world bring broken objects such as furniture or laptops, and work among people with amazing technical abilities in <span class="gap" data-id="106" onclick="showPop(106)">106</span> fields. <br><br> If you don’t have <span class="gap" data-id="107" onclick="showPop(107)">107</span> that needs repairing, you can still stay and enjoy a delicious snack. At the same time you can help someone <span class="gap" data-id="108" onclick="showPop(108)">108</span>. <br><br> Martina Becker <span class="gap" data-id="109" onclick="showPop(109)">109</span> the first Repair Café in Amsterdam in 2009. <span class="gap" data-id="110" onclick="showPop(110)">110</span> she was working there, she dreamed of opening the Repair Café Foundation. She finally did so some years later. This organization has offered help in building new cafés in the Netherlands <span class="gap" data-id="111" onclick="showPop(111)">111</span> 2011. Today, Martina feels the <span class="gap" data-id="112" onclick="showPop(112)">112</span> person on the planet.`, questions: { 105: { opts: ["above", "outside", "around"], corr: "around" }, 106: { opts: ["several", "each", "much"], corr: "several" }, 107: { opts: ["anything", "anywhere", "anyone"], corr: "anything" }, 108: { opts: ["once", "else", "enough"], corr: "else" }, 109: { opts: ["began", "begin", "begun"], corr: "began" }, 110: { opts: ["So", "While", "Except"], corr: "While" }, 111: { opts: ["since", "for", "until"], corr: "since" }, 112: { opts: ["lucky", "luckier", "luckiest"], corr: "luckiest" } } },
-            3: { title: "Music Writer", content: `I'm a music writer and play (0)_______ instruments. I like making music <span class="gap" data-id="97" onclick="showPop(97)">97</span> real sounds recorded from different places. So, I take the music that I <span class="gap" data-id="98" onclick="showPop(98)">98</span> created in the studio and I play it in concerts. <br><br> I record on the computer like <span class="gap" data-id="99" onclick="showPop(99)">99</span> does it today, and I also play real instruments. I edit all the music <span class="gap" data-id="100" onclick="showPop(100)">100</span> with the help of a computer. <br><br> I would say I spend <span class="gap" data-id="101" onclick="showPop(101)">101</span> of the time doing that. But it doesn't matter because now I know that music is a bridge <span class="gap" data-id="102" onclick="showPop(102)">102</span> the audience and the story, and it has <span class="gap" data-id="103" onclick="showPop(103)">103</span> a key part in films and plays. <br><br> Finally, I decided to continue working <span class="gap" data-id="104" onclick="showPop(104)">104</span> on this kind of music field because my job is the best experience.`, questions: { 97: { opts: ["uses", "use", "using"], corr: "using" }, 98: { opts: ["having", "has", "have"], corr: "have" }, 99: { opts: ["everybody", "everything", "somebody"], corr: "everybody" }, 100: { opts: ["yourself", "myself", "herself"], corr: "myself" }, 101: { opts: ["many", "most", "few"], corr: "most" }, 102: { opts: ["around", "between", "inside"], corr: "between" }, 103: { opts: ["becomes", "became", "become"], corr: "become" }, 104: { opts: ["hardest", "hard", "hardly"], corr: "hard" } } },
-            4: { title: "Lynda Carter", content: `Lynda Carter, the American star, wasn't really popular as a schoolchild because she wasn't very good-looking. As she was (o)_______ than most boys, they usually laughed at her. She was <span class="gap" data-id="100" onclick="showPop(100)">100</span> called "Olive", like Popeye's thin girlfriend. <br><br> At the age of 15, she wanted to become a singer <span class="gap" data-id="101" onclick="showPop(101)">101</span> she changed the spelling of her first name from Linda to Lynda because she always said to <span class="gap" data-id="102" onclick="showPop(102)">102</span> it seemed more interesting. Two years later, she was singing in two different groups and traveling all <span class="gap" data-id="103" onclick="showPop(103)">103</span> the country. <br><br> In 1974, Lynda went to Los Angeles and <span class="gap" data-id="104" onclick="showPop(104)">104</span> acting on television. She <span class="gap" data-id="105" onclick="showPop(105)">105</span> continued playing her music at concerts, and recorded her only album, Portrait. Later, she was <span class="gap" data-id="106" onclick="showPop(106)">106</span> to act in "Wonder Woman". It was a successful TV program that <span class="gap" data-id="107" onclick="showPop(107)">107</span> loved.`, questions: { 100: { opts: ["anyway", "however", "even"], corr: "even" }, 101: { opts: ["so", "as", "if"], corr: "so" }, 102: { opts: ["himself", "herself", "yourself"], corr: "herself" }, 103: { opts: ["among", "over", "beside"], corr: "over" }, 104: { opts: ["beginning", "begin", "began"], corr: "began" }, 105: { opts: ["also", "just", "once"], corr: "also" }, 106: { opts: ["invite", "inviting", "invited"], corr: "invited" }, 107: { opts: ["everyone", "something", "everything"], corr: "everyone" } } },
-            5: { title: "Perfume", content: `People have always (0)_______ perfume to help them smell good. <span class="gap" data-id="97" onclick="showPop(97)">97</span> centuries, people have added different things to perfumes, especially oils taken from plants and animals. In the factories <span class="gap" data-id="98" onclick="showPop(98)">98</span> they're mixed, the air is always filled with a special smell that everyone <span class="gap" data-id="99" onclick="showPop(99)">99</span>. <br><br> The first perfumes came from the earliest groups of people in history. <span class="gap" data-id="100" onclick="showPop(100)">100</span> 2005, it was discovered that the world's first perfumes were made in European countries, <span class="gap" data-id="101" onclick="showPop(101)">101</span> Cyprus and France. <span class="gap" data-id="102" onclick="showPop(102)">102</span> of those perfumes are still in perfect condition because they were carefully preserved in bottles during years. <br><br> <span class="gap" data-id="103" onclick="showPop(103)">103</span> you want your perfume to have a strong smell, body temperature is important. Just put some on the warm parts of your body. <span class="gap" data-id="104" onclick="showPop(104)">104</span> home without wearing your favorite perfume is something you shouldn't do.`, questions: { 97: { opts: ["Since", "Across", "For"], corr: "For" }, 98: { opts: ["which", "who", "where"], corr: "where" }, 99: { opts: ["loving", "loves", "love"], corr: "loves" }, 100: { opts: ["On", "In", "At"], corr: "In" }, 101: { opts: ["like", "through", "along"], corr: "like" }, 102: { opts: ["Both", "Any", "Most"], corr: "Most" }, 103: { opts: ["So", "If", "While"], corr: "If" }, 104: { opts: ["Left", "Leaves", "Leaving"], corr: "Leaving" } } },
-            6: { title: "FIFA World Cup", content: `TVs are (0)_______ on. The FIFA World Cup, the biggest soccer event, has <span class="gap" data-id="97" onclick="showPop(97)">97</span> begun. Soccer is a very popular sport; I would say it is the one with the most fans, <span class="gap" data-id="98" onclick="showPop(98)">98</span> it? Actually, the FIFA World Cup has always <span class="gap" data-id="99" onclick="showPop(99)">99</span> a great show. <br><br> Before 1978, not many teams could take part in the competition, <span class="gap" data-id="100" onclick="showPop(100)">100</span> then included few countries. Teams from Europe and South America are usually <span class="gap" data-id="101" onclick="showPop(101)">101</span> than those from Asia or Africa. <br><br> Brazil has played all the World Cups but spent many years without winning a title until 1970, when they played <span class="gap" data-id="102" onclick="showPop(102)">102</span> Italy. This was a really exciting match! <span class="gap" data-id="103" onclick="showPop(103)">103</span> 90 minutes of emotion, Brazil got the great prize. <br><br> So, stay where you are. You <span class="gap" data-id="104" onclick="showPop(104)">104</span> leave your seat. The first goal is coming soon.`, questions: { 97: { opts: ["still", "just", "yet"], corr: "just" }, 98: { opts: ["isn't", "hasn't", "doesn't"], corr: "isn't" }, 99: { opts: ["offering", "offer", "offered"], corr: "offered" }, 100: { opts: ["which", "who", "where"], corr: "which" }, 101: { opts: ["strong", "stronger", "strongest"], corr: "stronger" }, 102: { opts: ["across", "against", "among"], corr: "against" }, 103: { opts: ["Along", "Around", "After"], corr: "After" }, 104: { opts: ["needn't", "mustn't", "wouldn't"], corr: "mustn't" } } },
-            7: { title: "Grandma Gatewood", content: `This strange story (0)_______ in April 1955. On a foggy morning, Emma Gatewood, an American school teacher, told her family, "I will go for a walk after breakfast." She left her small Ohio town with the clothes she had on and less <span class="gap" data-id="98" onclick="showPop(98)">98</span> US$200. No one <span class="gap" data-id="99" onclick="showPop(99)">99</span> guess her plans: not one of her 11 children or her 23 grandchildren. <br><br> At the age of 67, Emma became the first woman <span class="gap" data-id="100" onclick="showPop(100)">100</span> walked the Appalachian Trail, a 2,050-mile way <span class="gap" data-id="101" onclick="showPop(101)">101</span> forests and mountains. She didn't have <span class="gap" data-id="102" onclick="showPop(102)">102</span> money or good equipment, but during her long journey, people helped her <span class="gap" data-id="103" onclick="showPop(103)">103</span> she went. <br><br> Today, even sixty years later, "Grandma" Gatewood’s story is <span class="gap" data-id="104" onclick="showPop(104)">104</span> amazing. Her story shows how any person can <span class="gap" data-id="105" onclick="showPop(105)">105</span> stronger than they were before.`, questions: { 98: { opts: ["than", "as", "that"], corr: "than" }, 99: { opts: ["could", "must", "shall"], corr: "could" }, 100: { opts: ["where", "who", "which"], corr: "who" }, 101: { opts: ["under", "until", "through"], corr: "through" }, 102: { opts: ["few", "enough", "little"], corr: "enough" }, 103: { opts: ["everyone", "everywhere", "everything"], corr: "everywhere" }, 104: { opts: ["ever", "still", "already"], corr: "still" }, 105: { opts: ["become", "became", "becoming"], corr: "become" } } },
-            8: { title: "The Yeti", content: `The Yeti, (0)_______ is a strange type of monster, is now well-known. Since long ago, people have believed they have seen it <span class="gap" data-id="97" onclick="showPop(97)">97</span> food in Asian hills. A <span class="gap" data-id="98" onclick="showPop(98)">98</span> expeditions have tried to find it in the mountains of China, Nepal and <span class="gap" data-id="99" onclick="showPop(99)">99</span>, but it hasn't <span class="gap" data-id="100" onclick="showPop(100)">100</span> been possible to take a photo of the Yeti. <br><br> The Yeti seems to be huge, white and heavy. <span class="gap" data-id="101" onclick="showPop(101)">101</span> this is the way it is often described, it is said that Yetis come in a variety of shapes, so this is probably not its <span class="gap" data-id="102" onclick="showPop(102)">102</span> usual form. <br><br> The fact that this creature hasn't been <span class="gap" data-id="103" onclick="showPop(103)">103</span> yet doesn't mean that it doesn't exist, but that it could be shy and afraid of humans. For this reason, this animal - real or not - will <span class="gap" data-id="104" onclick="showPop(104)">104</span> be part of our stories.`, questions: { 97: { opts: ["collects", "collected", "collecting"], corr: "collecting" }, 98: { opts: ["few", "little", "much"], corr: "few" }, 99: { opts: ["far", "further", "furthest"], corr: "further" }, 100: { opts: ["since", "yet", "during"], corr: "yet" }, 101: { opts: ["That", "While", "Except"], corr: "While" }, 102: { opts: ["another", "every", "most"], corr: "most" }, 103: { opts: ["discovered", "discover", "discovering"], corr: "discovered" }, 104: { opts: ["then", "again", "always"], corr: "always" } } },
-            9: { title: "Tour guides", content: `Tour guides take people on sightseeing trips (0) ______ places of interest in different countries or cities. On some tours, they may drive cars, <span class="gap" data-id="95" onclick="showPop(95)">95</span> tourists’ hotel rooms and carry luggage. <br><br> They take people on indoor visits, such as tours <span class="gap" data-id="96" onclick="showPop(96)">96</span> museums or famous buildings. Others spend <span class="gap" data-id="97" onclick="showPop(97)">97</span> of their time outdoors, taking people on trips to visit cities or towns. <br><br> Tour guides <span class="gap" data-id="98" onclick="showPop(98)">98</span> do their jobs both on weekdays and weekends. They can also be <span class="gap" data-id="99" onclick="showPop(99)">99</span> from home for a few days or a few months. They have very little time for <span class="gap" data-id="100" onclick="showPop(100)">100</span> and to spend with families <span class="gap" data-id="101" onclick="showPop(101)">101</span> they work long hours with hotels, meals and transportation. <br><br> Anyway, one of the good things about being a tour guide is <span class="gap" data-id="102" onclick="showPop(102)">102</span> people from different cultures.`, questions: { 95: { opts: ["book", "booking", "booked"], corr: "book" }, 96: { opts: ["against", "above", "around"], corr: "around" }, 97: { opts: ["several", "most", "many"], corr: "most" }, 98: { opts: ["often", "already", "early"], corr: "often" }, 99: { opts: ["inside", "over", "away"], corr: "away" }, 100: { opts: ["yourselves", "themselves", "ourselves"], corr: "themselves" }, 101: { opts: ["so", "because", "or"], corr: "because" }, 102: { opts: ["meeting", "meet", "meets"], corr: "meeting" } } },
-            10: { title: "AMSTERDAM", content: `Amsterdam is among the 0 ______ small cities in the world, and it's one of the most beautiful and exciting cities in <span class="gap" data-id="100" onclick="showPop(100)">100</span> of Europe. Amsterdam is <span class="gap" data-id="101" onclick="showPop(101)">101</span> for its streets along the water and world-famous museums and history. <br><br> Amsterdam is <span class="gap" data-id="102" onclick="showPop(102)">102</span> a friendly city. It has <span class="gap" data-id="103" onclick="showPop(103)">103</span> you can find in a big city: popular discos, international restaurants, and good transport. In Amsterdam, your next stop is never far away, but if you're looking <span class="gap" data-id="104" onclick="showPop(104)">104</span> really local experiences, get a bike. Exploring the city on a boat is another very popular and easy way to <span class="gap" data-id="105" onclick="showPop(105)">105</span> around this special place. <br><br> Finally, <span class="gap" data-id="106" onclick="showPop(106)">106</span> you are staying longer, consider a trip during the day to see the towns and villages nearby Amsterdam. <span class="gap" data-id="107" onclick="showPop(107)">107</span> one is full of awesome things.`, questions: { 100: { opts: ["any", "every", "all"], corr: "all" }, 101: { opts: ["visit", "visited", "visits"], corr: "visited" }, 102: { opts: ["ever", "so", "also"], corr: "also" }, 103: { opts: ["everything", "everyone", "nothing"], corr: "everything" }, 104: { opts: ["for", "after", "out"], corr: "for" }, 105: { opts: ["traveling", "travel", "travels"], corr: "travel" }, 106: { opts: ["than", "while", "if"], corr: "if" }, 107: { opts: ["Each", "Both", "Other"], corr: "Each" } } },
-            11: { title: "Golden Gate Bridge", content: `The Golden Gate Bridge is a well-known bridge that crosses (0) ______ the sea. Once the bridge was <span class="gap" data-id="97" onclick="showPop(97)">97</span> in 1937, a large number of people visited San Francisco. They just wanted to cross the <span class="gap" data-id="98" onclick="showPop(98)">98</span> bridge in the world. <br><br> Joseph Strauss and most of the engineers who were in the project, spent some months <span class="gap" data-id="99" onclick="showPop(99)">99</span> on something which could actually hold the long heavy cables of the bridge <span class="gap" data-id="100" onclick="showPop(100)">100</span>. The engineers <span class="gap" data-id="101" onclick="showPop(101)">101</span> agreed the colors of the bridge should be red and orange. People thought that these colors were <span class="gap" data-id="102" onclick="showPop(102)">102</span> easy to see and they were similar to the colors of other places <span class="gap" data-id="103" onclick="showPop(103)">103</span> the city. <br><br> People can cross it by car or motorbike <span class="gap" data-id="104" onclick="showPop(104)">104</span> time. During the day, they can use their bicycles or just walk.`, questions: { 97: { opts: ["finishes", "finishing", "finished"], corr: "finished" }, 98: { opts: ["tall", "taller", "tallest"], corr: "tallest" }, 99: { opts: ["decide", "deciding", "decides"], corr: "deciding" }, 100: { opts: ["itself", "himself", "herself"], corr: "itself" }, 101: { opts: ["so", "anyway", "also"], corr: "also" }, 102: { opts: ["such", "quite", "much"], corr: "quite" }, 103: { opts: ["around", "above", "into"], corr: "around" }, 104: { opts: ["both", "another", "any"], corr: "any" } } },
-            12: { title: "Is Britain really different?", content: `Britain is obviously (0) ______ from its neighbors; and this is the reason why the British consider <span class="gap" data-id="105" onclick="showPop(105)">105</span> countries so "different". <br><br> It's <span class="gap" data-id="106" onclick="showPop(106)">106</span> a strange situation; so let me <span class="gap" data-id="107" onclick="showPop(107)">107</span> you about it. Britain's borders were created <span class="gap" data-id="108" onclick="showPop(108)">108</span> nature; when you walk in a straight line in any direction, you'll reach the sea! If you want to go abroad, you can't do it <span class="gap" data-id="109" onclick="showPop(109)">109</span> you do it by ship, plane or train. So, you can't just drive or walk <span class="gap" data-id="110" onclick="showPop(110)">110</span> the border. <br><br> Of course, Great Britain has <span class="gap" data-id="111" onclick="showPop(111)">111</span> some more differences for years. They have sports like cricket and use pounds. <span class="gap" data-id="112" onclick="showPop(112)">112</span> out with friends in 'pubs' or places where drinks, food and entertainment are available also makes them really special.`, questions: { 105: { opts: ["enough", "few", "other"], corr: "other" }, 106: { opts: ["else", "quite", "much"], corr: "quite" }, 107: { opts: ["told", "tell", "telling"], corr: "tell" }, 108: { opts: ["up", "at", "by"], corr: "by" }, 109: { opts: ["unless", "though", "while"], corr: "unless" }, 110: { opts: ["beside", "across", "inside"], corr: "across" }, 111: { opts: ["creating", "created", "create"], corr: "created" }, 112: { opts: ["Hang", "Hangs", "Hanging"], corr: "Hanging" } } },
-            13: { title: "A puzzle legend", content: `Ivan Moscovich was born (0) ______ 4 June 1926. He was a legend in the world of puzzles, a fantastic inventor of toys and games, <span class="gap" data-id="97" onclick="showPop(97)">97</span> died at 96 years old. <br><br> He designed <span class="gap" data-id="98" onclick="showPop(98)">98</span> than 100 toys and games. In 2020, he <span class="gap" data-id="99" onclick="showPop(99)">99</span> an important prize from the US toy and game industry. Actually, he was <span class="gap" data-id="100" onclick="showPop(100)">100</span> preparing new products well into his 90s. <br><br> In 1964, Ivan started the <span class="gap" data-id="101" onclick="showPop(101)">101</span> Science and Technology Museum of its time. In it, there are a lot of objects which were <span class="gap" data-id="102" onclick="showPop(102)">102</span> by him. He wrote a puzzle book called "Big Book of Brain Games", which sold <span class="gap" data-id="103" onclick="showPop(103)">103</span> half a million copies. Ivan's name <span class="gap" data-id="104" onclick="showPop(104)">104</span> not be famous today, but he was great at making amazing objects.`, questions: { 97: { opts: ["who", "where", "when"], corr: "who" }, 98: { opts: ["must", "much", "more"], corr: "more" }, 99: { opts: ["win", "won", "winning"], corr: "won" }, 100: { opts: ["yet", "once", "still"], corr: "still" }, 101: { opts: ["good", "better", "best"], corr: "best" }, 102: { opts: ["designing", "design", "designed"], corr: "designed" }, 103: { opts: ["around", "between", "inside"], corr: "around" }, 104: { opts: ["wall", "might", "should"], corr: "might" } } },
-            14: { title: "Elephants in the circus", content: `One of America's top shows will have no elephants (0) ______ stage in a few years. All their elephants will go to a natural park and be <span class="gap" data-id="98" onclick="showPop(98)">98</span> there than in the circus. One hundred years ago, people <span class="gap" data-id="99" onclick="showPop(99)">99</span> it was OK for animals to be in these shows; <span class="gap" data-id="100" onclick="showPop(100)">100</span>, today things have changed. People have <span class="gap" data-id="101" onclick="showPop(101)">101</span> to worry about it because the animals aren't free. <br><br> A lot of environmental groups believe that these kinds <span class="gap" data-id="102" onclick="showPop(102)">102</span> shows are not right. One group says circus elephants have a bad life. They <span class="gap" data-id="103" onclick="showPop(103)">103</span> have pains in their bodies and get sick. This group <span class="gap" data-id="104" onclick="showPop(104)">104</span> wants elephants to rest. There are even some places in the USA where shows <span class="gap" data-id="105" onclick="showPop(105)">105</span> use elephants because people agree that it is important to protect them.`, questions: { 98: { opts: ["happier", "happy", "happiest"], corr: "happier" }, 99: { opts: ["thinking", "thought", "think"], corr: "thought" }, 100: { opts: ["neither", "next", "however"], corr: "however" }, 101: { opts: ["begin", "begun", "began"], corr: "begun" }, 102: { opts: ["for", "about", "of"], corr: "of" }, 103: { opts: ["may", "shall", "should"], corr: "may" }, 104: { opts: ["least", "only", "almost"], corr: "only" }, 105: { opts: ["never", "usually", "always"], corr: "never" } } },
-            15: { title: "Useful things", content: `Few things are (0) ______ than having everything you need with you. I am a single father and I have to look <span class="gap" data-id="105" onclick="showPop(105)">105</span> two teenagers; both of them are beautiful and clever. My car has become a very useful thing when it comes to <span class="gap" data-id="106" onclick="showPop(106)">106</span> them to the museum or to the department store. <span class="gap" data-id="107" onclick="showPop(107)">107</span> their friends in these places is important for them. <br><br> However, the <span class="gap" data-id="108" onclick="showPop(108)">108</span> important thing on my list is my cell phone. I <span class="gap" data-id="109" onclick="showPop(109)">109</span> shopping and bought a modern one two months <span class="gap" data-id="110" onclick="showPop(110)">110</span>. It is useful since I use it as an alarm clock to wake up <span class="gap" data-id="111" onclick="showPop(111)">111</span> 5 o'clock, and I can <span class="gap" data-id="112" onclick="showPop(112)">112</span> check information on the web or send text messages to my colleagues.`, questions: { 105: { opts: ["about", "after", "around"], corr: "after" }, 106: { opts: ["take", "taking", "taken"], corr: "taking" }, 107: { opts: ["Met", "Meet", "Meeting"], corr: "Meeting" }, 108: { opts: ["more", "most", "much"], corr: "most" }, 109: { opts: ["go", "went", "gone"], corr: "went" }, 110: { opts: ["ever", "already", "ago"], corr: "ago" }, 111: { opts: ["at", "in", "on"], corr: "at" }, 112: { opts: ["quite", "also", "once"], corr: "also" } } },
-            16: { title: "Ed Sheeran", content: `Ed Sheeran is an English pop singer whose journey to the top (0) ______ only five years. He became famous <span class="gap" data-id="1" onclick="showPop(1)">1</span> the success of his first song. <br><br> Ed <span class="gap" data-id="2" onclick="showPop(2)">2</span> play instruments like the drums from a young age and in 2006 he designed the cover of his first album <span class="gap" data-id="3" onclick="showPop(3)">3</span>. Two years later, he made <span class="gap" data-id="4" onclick="showPop(4)">4</span> popular songs, but he was not a star yet; he <span class="gap" data-id="5" onclick="showPop(5)">5</span> played at small places until 2011. That year, his song “The A Team” became available for download. <br><br> With his third album, he got back on the popular song lists <span class="gap" data-id="6" onclick="showPop(6)">6</span> than ever. Ed has had many successful years and now, <span class="gap" data-id="7" onclick="showPop(7)">7</span> taking a break from recording, he is preparing for a new project: a musical show he was <span class="gap" data-id="8" onclick="showPop(8)">8</span> to perform in the US.`, questions: { 1: { opts: ["after", "along", "across"], corr: "after" }, 2: { opts: ["shall", "could", "must"], corr: "could" }, 3: { opts: ["herself", "themselves", "himself"], corr: "himself" }, 4: { opts: ["several", "another", "each"], corr: "several" }, 5: { opts: ["almost", "exactly", "actually"], corr: "actually" }, 6: { opts: ["strong", "stronger", "strongest"], corr: "stronger" }, 7: { opts: ["so", "while", "if"], corr: "while" }, 8: { opts: ["asked", "asks", "ask"], corr: "asked" } } },
-            17: { title: "Joanne Rowling", content: `J. K. Rowling, the author of Harry Potter, wanted to be a writer (0)____ she was little. She got the idea for the series on a train in 1990. <span class="gap" data-id="106" onclick="showPop(106)">106</span> the next five years, she thought about the story, and by 1995 she had <span class="gap" data-id="107" onclick="showPop(107)">107</span> a plan for seven books. She ended up with <span class="gap" data-id="108" onclick="showPop(108)">108</span> boxes of notes because she wrote her stories <span class="gap" data-id="109" onclick="showPop(109)">109</span> hand. <br><br> She sent three chapters to some agents, but only one wrote back asking to see the rest of the book. Joanne felt proud of <span class="gap" data-id="110" onclick="showPop(110)">110</span> when she read that letter. <br><br> The first Harry Potter book was published in 1996. <span class="gap" data-id="111" onclick="showPop(111)">111</span> the book was translated into <span class="gap" data-id="112" onclick="showPop(112)">112</span> languages, Harry Potter became popular around the world, and now, many years later, Joanne is <span class="gap" data-id="113" onclick="showPop(113)">113</span> receiving thousands of fan letters.`, questions: { 106: { opts: ["Towards", "Over", "Upon"], corr: "Over" }, 107: { opts: ["develops", "developed", "develop"], corr: "developed" }, 108: { opts: ["several", "enough", "much"], corr: "several" }, 109: { opts: ["at", "off", "by"], corr: "by" }, 110: { opts: ["itself", "herself", "himself"], corr: "herself" }, 111: { opts: ["If", "So", "As"], corr: "As" }, 112: { opts: ["many", "such", "half"], corr: "many" }, 113: { opts: ["still", "yet", "soon"], corr: "still" } } },
-            18: { title: "Fast food vs. Slow food", content: `The term "fast food" is (0)__________ for restaurants that serve cheap meals <span class="gap" data-id="98" onclick="showPop(98)">98</span> in paper bags or boxes, for example burgers and French fries. Fast food <span class="gap" data-id="99" onclick="showPop(99)">99</span> popular in the United States in the 1950s, but today, it's known that it is bad for your body. <br><br> There's also "slow food". It began in 1986 thanks to Carlo Petrini, an Italian journalist <span class="gap" data-id="100" onclick="showPop(100)">100</span> visited a McDonald's restaurant in Rome. He thought it was horrible. <br><br> <span class="gap" data-id="101" onclick="showPop(101)">101</span>, Petrini started "slow food", which is about <span class="gap" data-id="102" onclick="showPop(102)">102</span> fresh food that is cooked for a longer time; that's why this food is <span class="gap" data-id="103" onclick="showPop(103)">103</span>. It has two goals: to make the food of your town popular, and to buy food grown <span class="gap" data-id="104" onclick="showPop(104)">104</span> small farmers. This movement now has <span class="gap" data-id="105" onclick="showPop(105)">105</span> 80,000 members in 100 countries.`, questions: { 98: { opts: ["quickly", "quickest", "quicker"], corr: "quickly" }, 99: { opts: ["becoming", "become", "became"], corr: "became" }, 100: { opts: ["what", "who", "which"], corr: "who" }, 101: { opts: ["So", "If", "As"], corr: "So" }, 102: { opts: ["eat", "eaten", "eating"], corr: "eating" }, 103: { opts: ["healthiest", "health", "healthier"], corr: "healthier" }, 104: { opts: ["by", "near", "off"], corr: "by" }, 105: { opts: ["until", "over", "across"], corr: "over" } } },
-            19: { title: "The Olympic Games", content: `In 1896, a French man called Pierre de Coubertin began the modern Olympics. He was (0)____ interested in sports, and he felt it would be amazing to see all the countries <span class="gap" data-id="98" onclick="showPop(98)">98</span> the world get together in a sports competition. Pierre <span class="gap" data-id="99" onclick="showPop(99)">99</span> drew the five colored rings <span class="gap" data-id="100" onclick="showPop(100)">100</span> in the Olympic Games. <br><br> Every time the games begin, carrying the Olympic fire from Greece to several countries isn't the <span class="gap" data-id="101" onclick="showPop(101)">101</span> job; actually, it's very hard. Also, <span class="gap" data-id="102" onclick="showPop(102)">102</span> country where the Olympic Games are held <span class="gap" data-id="103" onclick="showPop(103)">103</span> be chosen carefully. <br><br> The Olympic Games have <span class="gap" data-id="104" onclick="showPop(104)">104</span> the largest sports event in the world. There are Summer and Winter Games and <span class="gap" data-id="105" onclick="showPop(105)">105</span> than 30 sports are included. Certainly, the men and women who want to compete in the Olympic Games are prepared before the competition begins.`, questions: { 98: { opts: ["around", "by", "into"], corr: "around" }, 99: { opts: ["herself", "itself", "himself"], corr: "himself" }, 100: { opts: ["using", "use", "used"], corr: "used" }, 101: { opts: ["easiest", "easy", "easier"], corr: "easiest" }, 102: { opts: ["other", "each", "such"], corr: "each" }, 103: { opts: ["must", "shall", "could"], corr: "must" }, 104: { opts: ["become", "becoming", "becomes"], corr: "become" }, 105: { opts: ["soon", "more", "still"], corr: "more" } } },
-            20: { title: "CLEOPATRA", content: `One of the (0)__________ famous women in world history was Cleopatra. She was the last Pharaoh of Egypt. She became queen of Egypt in 51 B.C. <span class="gap" data-id="86" onclick="showPop(86)">86</span> the age of eighteen. She was a descendant of one of Alexander the Great's generals. When she was twenty-one, Julius Caesar became <span class="gap" data-id="87" onclick="showPop(87)">87</span> well-known lover. Seven years <span class="gap" data-id="88" onclick="showPop(88)">88</span> she met Anthony. The romantic tragic relationship continued <span class="gap" data-id="89" onclick="showPop(89)">89</span> they died by suicide in 30 B.C. <br><br> Cleopatra was legendary. She was famous not <span class="gap" data-id="90" onclick="showPop(90)">90</span> for being intelligent, but also for being beautiful. She had brown hair and brown eyes and they looked <span class="gap" data-id="91" onclick="showPop(91)">91</span> they were cats' eyes. <br><br> Cleopatra was a woman of wonderful elegance and unusual intelligence. She was <span class="gap" data-id="92" onclick="showPop(92)">92</span> educated. She <span class="gap" data-id="93" onclick="showPop(93)">93</span> speak nine languages and she was also good at mathematics.`, questions: { 86: { opts: ["on", "to", "at"], corr: "at" }, 87: { opts: ["her", "their", "his"], corr: "her" }, 88: { opts: ["while", "ago", "later"], corr: "later" }, 89: { opts: ["when", "until", "but"], corr: "until" }, 90: { opts: ["only", "yet", "rather"], corr: "only" }, 91: { opts: ["after", "for", "like"], corr: "like" }, 92: { opts: ["highly", "high", "higher"], corr: "highly" }, 93: { opts: ["should", "may", "could"], corr: "could" } } },
+            2: { title: "Repair Cafés", content: `Repair Cafés are free meeting places (0)_______ you'll find equipment and specialists who will help you make things as good as new. Visitors from <span class="gap" data-id="105" onclick="showPop(105)">105</span> the world bring broken objects such as furniture or laptops, and work among people with amazing technical abilities in <span class="gap" data-id="106" onclick="showPop(106)">106</span> fields. <br><br> Martina Becker <span class="gap" data-id="109" onclick="showPop(109)">109</span> the first Repair Café in Amsterdam in 2009. <span class="gap" data-id="110" onclick="showPop(110)">110</span> she was working there, she dreamed of opening the Repair Café Foundation.`, questions: { 105: { opts: ["around", "above", "outside"], corr: "around" }, 106: { opts: ["several", "each", "much"], corr: "several" }, 109: { opts: ["began", "begin", "begun"], corr: "began" }, 110: { opts: ["So", "While", "Except"], corr: "While" } } },
+            3: { title: "Music Writer", content: `I'm a music writer and play (0)_______ instruments. I like making music <span class="gap" data-id="97" onclick="showPop(97)">97</span> real sounds recorded from different places.`, questions: { 97: { opts: ["uses", "use", "using"], corr: "using" } } },
+            4: { title: "Lynda Carter", content: `Lynda Carter, the American star, wasn't really popular as a schoolchild because she wasn't very good-looking.`, questions: { 100: { opts: ["anyway", "however", "even"], corr: "even" } } },
+            5: { title: "Perfume", content: `People have always (0)_______ perfume to help them smell good.`, questions: { 97: { opts: ["Since", "Across", "For"], corr: "For" } } },
+            6: { title: "FIFA World Cup", content: `The FIFA World Cup, the biggest soccer event, has <span class="gap" data-id="97" onclick="showPop(97)">97</span> begun.`, questions: { 97: { opts: ["still", "just", "yet"], corr: "just" } } },
+            7: { title: "Grandma Gatewood", content: `This strange story (0)_______ in April 1955.`, questions: { 98: { opts: ["than", "as", "that"], corr: "than" } } },
+            8: { title: "The Yeti", content: `The Yeti, (0)_______ is a strange type of monster, is now well-known.`, questions: { 97: { opts: ["collects", "collected", "collecting"], corr: "collecting" } } },
+            9: { title: "Tour guides", content: `Tour guides take people on sightseeing trips (0) ______ places.`, questions: { 95: { opts: ["book", "booking", "booked"], corr: "book" } } },
+            10: { title: "AMSTERDAM", content: `Amsterdam is among the 0 ______ small cities in the world.`, questions: { 100: { opts: ["any", "every", "all"], corr: "all" } } },
+            11: { title: "Golden Gate Bridge", content: `The Golden Gate Bridge crosses (0) ______ the sea.`, questions: { 97: { opts: ["finishes", "finishing", "finished"], corr: "finished" } } },
+            12: { title: "Is Britain really different?", content: `Britain is obviously (0) ______ from its neighbors.`, questions: { 105: { opts: ["enough", "few", "other"], corr: "other" } } },
+            13: { title: "A puzzle legend", content: `Ivan Moscovich was born (0) ______ 4 June 1926.`, questions: { 97: { opts: ["who", "where", "when"], corr: "who" } } },
+            14: { title: "Elephants in the circus", content: `All their elephants will go to a natural park.`, questions: { 98: { opts: ["happier", "happy", "happiest"], corr: "happier" } } },
+            15: { title: "Useful things", content: `Few things are (0) ______ than having everything you need.`, questions: { 105: { opts: ["about", "after", "around"], corr: "after" } } },
+            16: { title: "Ed Sheeran", content: `Ed Sheeran is an English pop singer.`, questions: { 1: { opts: ["after", "along", "across"], corr: "after" } } },
+            17: { title: "Joanne Rowling", content: `J. K. Rowling wanted to be a writer (0)____ she was little.`, questions: { 106: { opts: ["Towards", "Over", "Upon"], corr: "Over" } } },
+            18: { title: "Fast food vs. Slow food", content: `The term "fast food" is (0)__________ for restaurants.`, questions: { 98: { opts: ["quickly", "quickest", "quicker"], corr: "quickly" } } },
+            19: { title: "The Olympic Games", content: `In 1896, Pierre de Coubertin began the modern Olympics.`, questions: { 98: { opts: ["around", "by", "into"], corr: "around" } } },
+            20: { title: "CLEOPATRA", content: `Cleopatra was the last Pharaoh of Egypt.`, questions: { 86: { opts: ["on", "to", "at"], corr: "at" } } },
             21: { 
                 title: "Postcrossing", 
                 content: `Postcrossing is a website to send and receive real postcards from (o)____ around the world who is a member. Paulo Magalhães began this online project, which has been available <span class="gap" data-id="97" onclick="showPop(97)">97</span> 2005. <br><br> The number of members, called postcrosser, has <span class="gap" data-id="98" onclick="showPop(98)">98</span> quickly. By January 2019, 750,000 members in 212 countries were <span class="gap" data-id="99" onclick="showPop(99)">99</span> part in the project. Over 50 million postcards have <span class="gap" data-id="100" onclick="showPop(100)">100</span> traveled 250 billion km. <br><br> The idea is simple: for <span class="gap" data-id="101" onclick="showPop(101)">101</span> postcard you send, you will receive one from someone from a different culture. <span class="gap" data-id="102" onclick="showPop(102)">102</span> you want to join postcrossing, you will only need to fill out an online form. Then, your mail box will become the <span class="gap" data-id="103" onclick="showPop(103)">103</span> box of surprises in the world. I joined last year and got some amazing postcards. I just <span class="gap" data-id="104" onclick="showPop(104)">104</span> not believe it!`, 
-                questions: { 
-                    97: { opts: ["per", "since", "for"], corr: "since" }, 
-                    98: { opts: ["grow", "growing", "grown"], corr: "grown" }, 
-                    99: { opts: ["take", "taking", "took"], corr: "taking" }, 
-                    100: { opts: ["still", "yet", "already"], corr: "already" }, 
-                    101: { opts: ["such", "each", "other"], corr: "each" }, 
-                    102: { opts: ["Except", "while", "If"], corr: "If" }, 
-                    103: { opts: ["great", "greatest", "greater"], corr: "greatest" }, 
-                    104: { opts: ["could", "must", "shall"], corr: "could" } 
-                } 
+                questions: { 97: { opts: ["per", "since", "for"], corr: "since" }, 98: { opts: ["grow", "growing", "grown"], corr: "grown" }, 99: { opts: ["take", "taking", "took"], corr: "taking" }, 100: { opts: ["still", "yet", "already"], corr: "already" }, 101: { opts: ["such", "each", "other"], corr: "each" }, 102: { opts: ["Except", "while", "If"], corr: "If" }, 103: { opts: ["great", "greatest", "greater"], corr: "greatest" }, 104: { opts: ["could", "must", "shall"], corr: "could" } } 
             }
         };
 
-        let currentId = 1;
-        let currentGapId = null;
+        function startTimer() {
+            clearInterval(timerInterval);
+            seconds = 0;
+            const timerEl = document.getElementById('timer-display');
+            timerInterval = setInterval(() => {
+                seconds++;
+                let mins = Math.floor(seconds / 60);
+                let secs = seconds % 60;
+                if(timerEl) timerEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function stopFireworks() { if(fwInterval) { clearInterval(fwInterval); fwInterval = null; } }
 
         function loadText(id) {
+            stopFireworks();
             currentId = id;
             const data = textDatabase[id];
             const isFirst = id === 1;
             const isLast = id === Object.keys(textDatabase).length;
-            const gradient = bannerGradients[id - 1] || "linear-gradient(135deg, #E5E5EA 0%, #D1D1D6 100%)";
+            const gradient = bannerGradients[id - 1] || "linear-gradient(135deg, #CCC, #999)";
 
             document.getElementById('main-content').innerHTML = `
                 <div class="reading-card">
@@ -396,35 +391,69 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <p>${data.content}</p>
+                        <p style="font-size: 16px;">${data.content}</p>
                         <button class="check-btn" onclick="checkAnswers()">Verificar Resultados ✔</button>
+                        <div class="timer-container">
+                            <div class="timer-box" id="timer-display">00:00</div>
+                            <span class="timer-label">Tiempo transcurrido</span>
+                        </div>
                         <div id="results-panel" class="results-panel">
-                            <div id="feedback-msg"></div>
+                            <div id="feedback-msg" style="font-weight:900; font-size:24px; color:var(--primary); margin-bottom:20px;"></div>
                             <div class="res-grid">
-                                <div class="res-item res-total">
-                                    <span class="res-val" id="count-total">0</span>
-                                    <span class="res-lab">Total</span>
-                                </div>
-                                <div class="res-item res-correct" style="color:var(--success)">
-                                    <span class="res-val" id="count-correct">0</span>
-                                    <span class="res-lab">Bien</span>
-                                </div>
-                                <div class="res-item res-incorrect" style="color:var(--error)">
-                                    <span class="res-val" id="count-incorrect">0</span>
-                                    <span class="res-lab">Mal</span>
-                                </div>
+                                <div class="res-item res-total"><span class="res-val" id="count-total">0</span><span class="res-lab">Total</span></div>
+                                <div class="res-item res-correct" style="color:var(--success)"><span class="res-val" id="count-correct">0</span><span class="res-lab">Bien</span></div>
+                                <div class="res-item res-incorrect" style="color:var(--error)"><span class="res-val" id="count-incorrect">0</span><span class="res-lab">Mal</span></div>
                             </div>
                         </div>
                     </div>
                 </div>`;
-
-            document.querySelectorAll('#menu a').forEach(a => a.classList.remove('active'));
-            const activeLink = document.getElementById(`menu-link-${id}`);
-            if(activeLink) activeLink.classList.add('active');
             
-            updateProgressBar();
+            startTimer();
+            buildMenu();
             closeM();
+            updateProgressBar();
             window.scrollTo(0,0);
+        }
+
+        function checkAnswers() {
+            const data = textDatabase[currentId];
+            let c = 0, inc = 0;
+            const gaps = document.querySelectorAll('.gap');
+            gaps.forEach(g => {
+                const qid = g.getAttribute('data-id');
+                if(g.innerText.trim() === data.questions[qid].corr) { g.classList.add('correct'); c++; }
+                else { g.classList.add('incorrect'); inc++; }
+            });
+
+            document.getElementById('results-panel').style.display = 'block';
+            document.getElementById('count-total').innerText = gaps.length;
+            document.getElementById('count-correct').innerText = c;
+            document.getElementById('count-incorrect').innerText = inc;
+
+            const msg = document.getElementById('feedback-msg');
+            if(c === gaps.length) {
+                msg.innerText = "¡PERFECTO! 🌟";
+                clearInterval(timerInterval);
+                playResultSound(true);
+                if(!fwInterval) fwInterval = setInterval(createExplosion, 800);
+            } else {
+                msg.innerText = c >= gaps.length/2 ? "¡MUY BIEN! 👍" : "¡SIGUE PRACTICANDO! 💪";
+                playResultSound(c >= gaps.length/2);
+                stopFireworks();
+            }
+        }
+
+        function buildMenu() {
+            const list = document.getElementById('menu-list');
+            list.innerHTML = '';
+            Object.keys(textDatabase).forEach(id => {
+                const a = document.createElement('a');
+                a.href = "#";
+                a.innerText = `${id}. ${textDatabase[id].title}`;
+                if(parseInt(id) === currentId) a.className = 'active';
+                a.onclick = (e) => { e.preventDefault(); loadText(parseInt(id)); };
+                list.appendChild(a);
+            });
         }
 
         function updateProgressBar() {
@@ -447,62 +476,18 @@
                     g.innerText = opt; g.classList.add('filled');
                     g.classList.remove('correct', 'incorrect');
                     updateProgressBar();
-                    closePop();
+                    document.getElementById('modal-overlay').style.display = 'none';
                 };
                 box.appendChild(btn);
             });
             document.getElementById('modal-overlay').style.display = 'flex';
         }
 
-        function checkAnswers() {
-            const data = textDatabase[currentId];
-            let c = 0, inc = 0;
-            const gaps = document.querySelectorAll('.gap');
-            
-            gaps.forEach(g => {
-                const id = g.getAttribute('data-id');
-                if (g.innerText.trim() === data.questions[id].corr) {
-                    g.classList.add('correct'); c++;
-                } else {
-                    g.classList.add('incorrect'); inc++;
-                }
-            });
-
-            document.getElementById('results-panel').style.display = 'block';
-            document.getElementById('count-total').innerText = gaps.length;
-            document.getElementById('count-correct').innerText = c;
-            document.getElementById('count-incorrect').innerText = inc;
-            
-            const msg = document.getElementById('feedback-msg');
-            if(c === gaps.length) { msg.innerText = "¡EXCELENTE! 🌟"; playResultSound(true); }
-            else if(c >= gaps.length/2) { msg.innerText = "¡MUY BIEN! 👍"; playResultSound(true); }
-            else { msg.innerText = "¡SIGUE PRACTICANDO! 💪"; playResultSound(false); }
-
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
-        function navText(dir) {
-            const nextId = currentId + dir;
-            if (textDatabase[nextId]) loadText(nextId);
-        }
-
-        function buildMenu() {
-            const list = document.getElementById('menu-list');
-            Object.keys(textDatabase).forEach(id => {
-                const a = document.createElement('a');
-                a.id = `menu-link-${id}`;
-                a.href = "#";
-                a.innerText = `${id}. ${textDatabase[id].title}`;
-                a.onclick = (e) => { e.preventDefault(); loadText(parseInt(id)); };
-                list.appendChild(a);
-            });
-        }
-
-        function closePop(e) { if(!e || e.target.id === 'modal-overlay') document.getElementById('modal-overlay').style.display = 'none'; }
+        function navText(dir) { const nextId = currentId + dir; if(textDatabase[nextId]) loadText(nextId); }
         function openM() { document.getElementById('menu').style.left='0'; document.getElementById('m-overlay').style.display='block'; }
         function closeM() { document.getElementById('menu').style.left='-280px'; document.getElementById('m-overlay').style.display='none'; }
+        function closePop(e) { if(e.target.id === 'modal-overlay') document.getElementById('modal-overlay').style.display = 'none'; }
 
-        buildMenu();
         loadText(1);
     </script>
 </body>
